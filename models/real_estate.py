@@ -24,10 +24,6 @@ class Project(models.Model):
 
     payment_methods = fields.Char(string="Payment methods", required=True)
 
-    active = fields.Boolean(default=True)
-
-    default_code = fields.Char('Internal Reference', index=True)
-    code = fields.Char('Reference', compute='_compute_product_code')
 
     _sql_constraints = [        
         ('name_unique',

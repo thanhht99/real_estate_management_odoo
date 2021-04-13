@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="real_estate_form_view" model="ir.ui.view">
+            <field name="name">rem.project.form.view</field>
+            <field name="model">rem.project</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Project Name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Shophouse Bình Minh Garden"/></h1>
+                            <label for="code"/>
+                            <h3><field name="code"/></h3>
+                        </div>
+                        <group name="images">
+                            <group>
+                                <field name="investor"/>                                
+                                <field name="type"/>
+                                <field name="location"/>
+                            </group>
+                            <group>
+                                <field name="price"/>
+                                <field name="bank_support"/>
+                                <field name="discount"/>
+                                <field name="area"/>
+                            </group>                            
+                        </group>
+                        <notebook>
+                            <page name="general_information" string="General Information">
+								<group>
+									<group>
+										<field name="construction_form"/>
+									</group>
+									<group>
+										<field name="status"/>
+									</group>
+									<group>
+										<field name="time_book_receipt"/>
+									</group>
+								</group>
+							</page>
+							<page name="additional_information" string="Additional Information">
+								<group>
+									<group>
+										<field name="legal"/>
+									</group>
+                                    <group>
+										<field name="scale"/>
+									</group>
+									<group>
+										<field name="payment_methods"/>
+									</group>                                    
+								</group>
+							</page>							
+						</notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="real_estate_tree_view" model="ir.ui.view">
+            <field name="name">rem.project.tree.view</field>
+            <field name="model">rem.project</field>
+            <field name="arch" type="xml">
+                <tree string="Pets" default_order="create_date desc">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="investor"/>
+                    <field name="area"/> 
+                    <field name="type"/>
+                    <field name="location"/>                    
+                    <field name="price"/>                                       
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_real_estate" model="ir.actions.act_window">
+            <field name="name">Project</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rem.project</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('real_estate_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('real_estate_form_view')})]"/>
+        </record>
+
+        <menuitem id="menu_real_estate"
+            name="Project"
+            action="action_real_estate"
+            sequence="10"
+            groups="base.group_user"/>
+    </data>
+</odoo>
