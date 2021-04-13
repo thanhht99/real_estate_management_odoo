@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>  
+    <record model="ir.ui.view" id="project_form_view">
+            <field name="name">project.form</field>
+            <field name="model">rem.project</field>
+            <field name="arch" type="xml">
+                <form string="Project Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="responsible_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>                            
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+</odoo>
