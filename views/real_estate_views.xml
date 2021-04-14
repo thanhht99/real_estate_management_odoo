@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <record id="real_estate_form_view" model="ir.ui.view">
+        <record id="project_form_view" model="ir.ui.view">
             <field name="name">rem.project.form.view</field>
             <field name="model">rem.project</field>
             <field name="arch" type="xml">
@@ -59,7 +59,7 @@
             </field>
         </record>
 
-        <record id="real_estate_tree_view" model="ir.ui.view">
+        <record id="project_tree_view" model="ir.ui.view">
             <field name="name">rem.project.tree.view</field>
             <field name="model">rem.project</field>
             <field name="arch" type="xml">
@@ -75,20 +75,26 @@
             </field>
         </record>
 
-        <record id="action_real_estate" model="ir.actions.act_window">
+        <record id="action_project" model="ir.actions.act_window">
             <field name="name">Project</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">rem.project</field>
             <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
             <field name="view_ids" eval="[(5, 0, 0),
-                (0, 0, {'view_mode': 'tree', 'view_id': ref('real_estate_tree_view')}),
-                (0, 0, {'view_mode': 'form', 'view_id': ref('real_estate_form_view')})]"/>
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('project_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('project_form_view')})]"/>
         </record>
 
-        <menuitem id="menu_real_estate"
-            name="Project"
-            action="action_real_estate"
+        <menuitem id="main_real_estate"
+            name="Real Estate"            
             sequence="10"
             groups="base.group_user"/>
+
+        <menuitem id="project_menu" 
+                name="Project"
+                action="action_project"
+                sequence="1"
+                parent="main_real_estate"/>
+
     </data>
 </odoo>

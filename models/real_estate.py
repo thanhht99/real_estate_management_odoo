@@ -30,3 +30,4 @@ class Project(models.Model):
          'UNIQUE(name)',
          "The course title must be unique"),
     ]
+
