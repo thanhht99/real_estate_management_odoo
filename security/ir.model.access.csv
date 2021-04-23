@@ -1,2 +1,21 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rem_project,access_rem_project,model_rem_project,base.group_user,1,1,1,1
+access_product_pricelist_item_sale_manager,product.pricelist.item salemanager,product.model_product_pricelist_item,base.group_user,1,1,1,1
+access_product_price_history_salemanager,prices.history sale manager,product.model_product_price_history,base.group_user,1,1,1,1
+access_product_template_sale_manager,product.template salemanager,model_product_template,base.group_user,1,1,1,1
+access_product_product_sale_manager,product.product salemanager,model_product_product,base.group_user,1,1,1,1
+access_product_attribute_sale_manager,product.attribute manager,product.model_product_attribute,base.group_user,1,1,1,1
+access_product_attribute_value_sale_manager,product.attribute manager value,product.model_product_attribute_value,base.group_user,1,1,1,1
+access_product_product_attribute_sale_manager,product.template.attribute manager value,product.model_product_template_attribute_value,base.group_user,1,1,1,1
+access_product_product_attribute_custom_value,product.attribute.custom value manager,model_product_attribute_custom_value,base.group_user,1,1,1,1
+access_product_template_attribute_exclusion_sale_manager,product.attribute manager filter line,product.model_product_template_attribute_exclusion,base.group_user,1,1,1,1
+access_product_template_attribute_line_sale_manager,product.attribute manager line,product.model_product_template_attribute_line,base.group_user,1,1,1,1
+access_sale_order_invoicing_payments,sale.order,sale.model_sale_order,base.group_user,1,1,0,0
+access_sale_order_line_invoicing_payments,sale.order.line,sale.model_sale_order_line,base.group_user,1,1,0,0
+access_sale_order_manager,sale.order.manager,sale.model_sale_order,base.group_user,1,1,1,1
+access_sale_order_accountant,sale.order.accountant,sale.model_sale_order,base.group_user,1,1,0,0
+access_sale_order,sale.order,sale.model_sale_order,base.group_user,1,1,1,0
+access_sale_order_line,sale.order.line,sale.model_sale_order_line,base.group_user,1,1,1,1
+access_sale_order_line_accountant,sale.order.line accountant,sale.model_sale_order_line,base.group_user,1,1,0,0
+access_sale_order_portal,sale.order.portal,sale.model_sale_order,base.group_user,1,0,0,0
+access_sale_order_line_portal,sale.order.line.portal,sale.model_sale_order_line,base.group_user,1,0,0,0
