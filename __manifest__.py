@@ -36,6 +36,7 @@
         'views/real_estate_views.xml',
         'views/product_views.xml',
         'views/product_template_views.xml',
+        # 'views/sale_order_template_views.xml',
         'views/sale_order_views.xml',
     ],
     # only loaded in demonstration mode

@@ -40,9 +40,9 @@
                 </xpath>
                 <xpath expr="//div[@name='options']/div[1]" position="after">
                     <div>
-                                <field name="property_ok"/>
-                                <label for="property_ok"/>
-                            </div>
+                        <field name="property_ok"/>
+                        <label for="property_ok"/>
+                    </div>
                 </xpath>
                 <xpath expr="//page[@name='purchase']" position="attributes">
                     <attribute name="invisible">1</attribute>
