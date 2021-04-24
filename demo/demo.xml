@@ -36,5 +36,21 @@
             <field name="area">Đang cập nhật</field>
             <field name="price">1 - 3 tỷ</field>
         </record>
+        <record model="rem.agency" id="agency0">
+            <field name="name">Vstarland</field>
+            <field name="company">Công Ty Cổ Phần Bất Động Sản Vstarland</field>
+            <field name="address">Số 54, ngõ 2/16/18, tổ 18, đường Hoàng Liệt, Phường Hoàng Liệt, Quận Hoàng Mai, Hà Nội, Việt Nam</field>
+            <field name="tax_code">2500659637</field>
+            <field name="mobile">093 5566 898</field>
+        </record>
+        <record model="rem.agency" id="agency1">
+            <field name="name">ĐẤT XANH PLUS</field>
+            <field name="company">Công ty CP Dịch vụ bất động sản Đất Xanh</field>
+            <field name="address">2W Ung Văn Khiêm, P.25, Quận Bình Thạnh, TP.HCM</field>
+            <field name="tax_code">0316428049</field>
+            <field name="phone">028 3535 4888</field>
+            <field name="email">info@datxanh.com.vn</field>
+            <field name="website">www.datxanh.vn</field>
+        </record>
     </data>
 </odoo>

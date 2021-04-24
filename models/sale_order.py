@@ -15,4 +15,4 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
     _description = "Extend sale order model"
 
-    sale_date = fields.Datetime(string='Sale Date', default=fields.Datetime.now)
+    sale_date = fields.Datetime(string='Sale Date', required=True)
