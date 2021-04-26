@@ -27,16 +27,9 @@
             </xpath>
             <xpath expr="//page[@name='other_information']" position="after">
                 <page string="Agency List" name="agency_list">
-                            <!-- <group>
-                                <group name="group_bds">
-                                    <field name="attribute" string="Properties"/>
-                                    <field name="description" string="Describe"/>
-                                </group>
-                                <group name="group_bds2">
-                                    <field name="area" string="Acreage"/>
-                                    <field name="parcel_number" string="Number of plots"/>
-                                </group>
-                            </group> -->
+                    <group name="group_agency">
+                        <field name="agency_list" string="Agency List"/>
+                    </group>                           
                 </page>
             </xpath>
         </field>

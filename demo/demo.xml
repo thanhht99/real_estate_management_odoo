@@ -52,5 +52,23 @@
             <field name="email">info@datxanh.com.vn</field>
             <field name="website">www.datxanh.vn</field>
         </record>
+        <record model="rem.agency" id="agency2">
+            <field name="name">Best Land</field>
+            <field name="company">Công Ty TNHH Best Land</field>
+            <field name="address">218 Trần Văn Trà, Phường Tân Phong, Quận 7, Thành phố Hồ Chí Minh.</field>
+            <field name="tax_code">0313290699</field>
+            <field name="mobile">0819096096</field>
+            <field name="email">lienhe@bestland.vn</field>
+            <field name="website">www.bestland.vn</field>
+        </record>
+        <record model="rem.agency" id="agency3">
+            <field name="name">Savills</field>
+            <field name="company">Công ty TNHH Savills Việt Nam</field>
+            <field name="address">Tầng 6, Toà nhà Sentinel Place, 41A Lý Thái Tổ, Phường Lý Thái Tổ, Quận Hoàn Kiếm, Thành phố Hà Nội.</field>
+            <field name="tax_code">0100777512</field>
+            <field name="phone">028 3823 9205</field>
+            <field name="email">info@savills.com.vn</field>
+            <field name="website">www.savills.com.vn</field>
+        </record>
     </data>
 </odoo>
