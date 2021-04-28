@@ -38,6 +38,7 @@
         'views/product_template_views.xml',
         'views/agency.xml',
         'views/sale_order_views.xml',
+        'views/type_and_group.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -7,3 +7,4 @@ from . import project
 from . import cart
 from . import sale_order
 from . import agency
+from . import property_set
