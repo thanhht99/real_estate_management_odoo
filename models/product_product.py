@@ -15,6 +15,11 @@ class ProductTemplate(models.Model):
     parcel_number = fields.Integer('Property parcel number')
     area = fields.Float('Property Area (m2)', required=True)
 
+    transaction_status = fields.Selection([
+        ('csfs', 'Coming soon for sale'),
+        ('ofs', 'Open for sale')
+    ], string='Transaction status', default='csfs')
+
     optional_product_ids = fields.Many2many(
         'product.template', 'product_optional_rel', 'src_id', 'dest_id',
         string='Optional Products', help="Optional Products are suggested "

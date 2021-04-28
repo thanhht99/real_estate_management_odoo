@@ -14,7 +14,7 @@ class Agency(models.Model):
     email  = fields.Char('Email', default='Đang cập nhật')
     website  = fields.Char('Website', default='Đang cập nhật')
 
-    gender = fields.Selection([
+    partner_type = fields.Selection([
         ('main', 'Main'),
         ('sub', 'Sub')
     ], string='Partner type', default='sub')

@@ -13,79 +13,104 @@ _logger = logging.getLogger(__name__)
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = "product.template"
 
-    service_type = fields.Selection([('manual', 'Manually set quantities on order')], string='Track Service',
-                                    help="Manually set quantities on order: Invoice based on the manually entered quantity, without creating an analytic account.\n"
-                                    "Timesheets on contract: Invoice based on the tracked hours on the related timesheet.\n"
-                                    "Create a task and track hours: Create a task on the sales order validation and track the work hours.",
-                                    default='manual', oldname='track_service')
+    service_type = fields.Selection(
+        [("manual", "Manually set quantities on order")],
+        string="Track Service",
+        help="Manually set quantities on order: Invoice based on the manually entered quantity, without creating an analytic account.\n"
+        "Timesheets on contract: Invoice based on the tracked hours on the related timesheet.\n"
+        "Create a task and track hours: Create a task on the sales order validation and track the work hours.",
+        default="manual",
+        oldname="track_service",
+    )
     sale_line_warn = fields.Selection(
-        WARNING_MESSAGE, 'Sales Order Line', help=WARNING_HELP, required=True, default="no-message")
-    sale_line_warn_msg = fields.Text('Message for Sales Order Line')
+        WARNING_MESSAGE,
+        "Sales Order Line",
+        help=WARNING_HELP,
+        required=True,
+        default="no-message",
+    )
+    sale_line_warn_msg = fields.Text("Message for Sales Order Line")
     expense_policy = fields.Selection(
-        [('no', 'No'), ('cost', 'At cost'), ('sales_price', 'Sales price')],
-        string='Re-Invoice Policy',
-        default='no',
+        [("no", "No"), ("cost", "At cost"), ("sales_price", "Sales price")],
+        string="Re-Invoice Policy",
+        default="no",
         help="Expenses and vendor bills can be re-invoiced to a customer."
-             "With this option, a validated expense can be re-invoice to a customer at its cost or sales price.")
-    sales_count = fields.Float(compute='_compute_sales_count', string='Sold')
-    hide_expense_policy = fields.Boolean(
-        compute='_compute_hide_expense_policy')
-    invoice_policy = fields.Selection([
-        ('order', 'Ordered quantities'),
-        ('delivery', 'Delivered quantities')], string='Invoicing Policy',
-        help='Ordered Quantity: Invoice quantities ordered by the customer.\n'
-             'Delivered Quantity: Invoice quantities delivered to the customer.',
-        default='order')
+        "With this option, a validated expense can be re-invoice to a customer at its cost or sales price.",
+    )
+    sales_count = fields.Float(compute="_compute_sales_count", string="Sold")
+    hide_expense_policy = fields.Boolean(compute="_compute_hide_expense_policy")
+    invoice_policy = fields.Selection(
+        [("order", "Ordered quantities"), ("delivery", "Delivered quantities")],
+        string="Invoicing Policy",
+        help="Ordered Quantity: Invoice quantities ordered by the customer.\n"
+        "Delivered Quantity: Invoice quantities delivered to the customer.",
+        default="order",
+    )
 
-    property_ok = fields.Boolean('Can be Property', default=True)
+    property_ok = fields.Boolean("Can be Property")
+    sale_ok = fields.Boolean("Can be Sold", default=False)
+    purchase_ok = fields.Boolean("Can be Purchased", default=False)
 
-    @api.onchange('property_ok')
+    @api.onchange("property_ok")
     def _change_property_ok(self):
         if not self.property_ok:
-            self.expense_policy = 'no'
+            self.expense_policy = "no"
 
-    @api.onchange('sale_ok')
+    @api.onchange("sale_ok")
     def _change_sale_ok(self):
         if not self.sale_ok:
-            self.expense_policy = 'no'
+            self.expense_policy = "no"
 
     @api.multi
     def _compute_hide_expense_policy(self):
         hide_expense_policy = self.user_has_groups(
-            '!analytic.group_analytic_accounting,!project.group_project_user,!hr_expense.group_hr_expense_user')
+            "!analytic.group_analytic_accounting,!project.group_project_user,!hr_expense.group_hr_expense_user"
+        )
         for template in self:
             template.hide_expense_policy = hide_expense_policy
 
     @api.multi
-    @api.depends('product_variant_ids.sales_count')
+    @api.depends("product_variant_ids.sales_count")
     def _compute_sales_count(self):
         for product in self:
-            product.sales_count = float_round(sum([p.sales_count for p in product.with_context(
-                active_test=False).product_variant_ids]), precision_rounding=product.uom_id.rounding)
+            product.sales_count = float_round(
+                sum(
+                    [
+                        p.sales_count
+                        for p in product.with_context(
+                            active_test=False
+                        ).product_variant_ids
+                    ]
+                ),
+                precision_rounding=product.uom_id.rounding,
+            )
 
     @api.multi
     def action_view_sales(self):
-        date_from = fields.Datetime.to_string(fields.datetime.combine(
-            fields.datetime.now() - timedelta(days=365), time.min))
-        done_states = self.env['sale.report']._get_done_states()
+        date_from = fields.Datetime.to_string(
+            fields.datetime.combine(
+                fields.datetime.now() - timedelta(days=365), time.min
+            )
+        )
+        done_states = self.env["sale.report"]._get_done_states()
 
-        action = self.env.ref('sale.action_order_report_all').read()[0]
-        action['domain'] = [
-            ('state', 'in', done_states),
-            ('product_tmpl_id', 'in', self.ids),
-            ('date', '>=', date_from),
+        action = self.env.ref("sale.action_order_report_all").read()[0]
+        action["domain"] = [
+            ("state", "in", done_states),
+            ("product_tmpl_id", "in", self.ids),
+            ("date", ">=", date_from),
         ]
-        action['context'] = {
-            'search_default_last_year': 1,
-            'pivot_measures': ['product_uom_qty'],
+        action["context"] = {
+            "search_default_last_year": 1,
+            "pivot_measures": ["product_uom_qty"],
         }
         return action
 
     @api.multi
     def _create_product_variant(self, combination, log_warning=False):
-        """ Create if necessary and possible and return the product variant
+        """Create if necessary and possible and return the product variant
         matching the given combination for this template.
 
         It is possible to create only if the template has dynamic attributes
@@ -106,7 +131,7 @@ class ProductTemplate(models.Model):
         """
         self.ensure_one()
 
-        Product = self.env['product.product']
+        Product = self.env["product.product"]
 
         product_variant = self._get_variant_for_combination(combination)
         if product_variant:
@@ -115,26 +140,33 @@ class ProductTemplate(models.Model):
         if not self.has_dynamic_attributes():
             if log_warning:
                 _logger.warning(
-                    'The user #%s tried to create a variant for the non-dynamic product %s.' % (self.env.user.id, self.id))
+                    "The user #%s tried to create a variant for the non-dynamic product %s."
+                    % (self.env.user.id, self.id)
+                )
             return Product
 
         if not self._is_combination_possible(combination):
             if log_warning:
-                _logger.warning('The user #%s tried to create an invalid variant for the product %s.' % (
-                    self.env.user.id, self.id))
+                _logger.warning(
+                    "The user #%s tried to create an invalid variant for the product %s."
+                    % (self.env.user.id, self.id)
+                )
             return Product
 
         attribute_values = combination.mapped(
-            'product_attribute_value_id')._without_no_variant_attributes()
+            "product_attribute_value_id"
+        )._without_no_variant_attributes()
 
-        return Product.sudo().create({
-            'product_tmpl_id': self.id,
-            'attribute_value_ids': [(6, 0, attribute_values.ids)]
-        })
+        return Product.sudo().create(
+            {
+                "product_tmpl_id": self.id,
+                "attribute_value_ids": [(6, 0, attribute_values.ids)],
+            }
+        )
 
     @api.multi
     def create_product_variant(self, product_template_attribute_value_ids):
-        """ Create if necessary and possible and return the id of the product
+        """Create if necessary and possible and return the id of the product
         variant matching the given combination for this template.
 
         Note AWA: Known "exploit" issues with this method:
@@ -164,38 +196,55 @@ class ProductTemplate(models.Model):
         :return: id of the product variant matching the combination or 0
         :rtype: int
         """
-        combination = self.env['product.template.attribute.value'] \
-            .browse(json.loads(product_template_attribute_value_ids))
+        combination = self.env["product.template.attribute.value"].browse(
+            json.loads(product_template_attribute_value_ids)
+        )
 
         return self._create_product_variant(combination, log_warning=True).id or 0
 
-    @api.onchange('type')
+    @api.onchange("type")
     def _onchange_type(self):
         """ Force values to stay consistent with integrity constraints """
-        if self.type == 'consu':
+        if self.type == "consu":
             if not self.invoice_policy:
-                self.invoice_policy = 'order'
-            self.service_type = 'manual'
+                self.invoice_policy = "order"
+            self.service_type = "manual"
 
     @api.model
     def get_import_templates(self):
         res = super(ProductTemplate, self).get_import_templates()
-        if self.env.context.get('sale_multi_pricelist_product_template'):
-            sale_pricelist_setting = self.env['ir.config_parameter'].sudo(
-            ).get_param('sale.sale_pricelist_setting')
-            if sale_pricelist_setting == 'percentage':
-                return [{
-                    'label': _('Import Template for Products'),
-                    'template': '/product/static/xls/product_template.xls'
-                }, {
-                    'label': _('Import Template for Products (with several prices)'),
-                    'template': '/sale/static/xls/product_pricelist_several.xls'
-                }]
+        if self.env.context.get("sale_multi_pricelist_product_template"):
+            sale_pricelist_setting = (
+                self.env["ir.config_parameter"]
+                .sudo()
+                .get_param("sale.sale_pricelist_setting")
+            )
+            if sale_pricelist_setting == "percentage":
+                return [
+                    {
+                        "label": _("Import Template for Products"),
+                        "template": "/product/static/xls/product_template.xls",
+                    },
+                    {
+                        "label": _(
+                            "Import Template for Products (with several prices)"
+                        ),
+                        "template": "/sale/static/xls/product_pricelist_several.xls",
+                    },
+                ]
         return res
 
     @api.multi
-    def _get_combination_info(self, combination=False, product_id=False, add_qty=1, pricelist=False, parent_combination=False, only_template=False):
-        """ Return info about a given combination.
+    def _get_combination_info(
+        self,
+        combination=False,
+        product_id=False,
+        add_qty=1,
+        pricelist=False,
+        parent_combination=False,
+        only_template=False,
+    ):
+        """Return info about a given combination.
 
         Note: this method does not take into account whether the combination is
         actually possible.
@@ -246,25 +295,29 @@ class ProductTemplate(models.Model):
         # get the name before the change of context to benefit from prefetch
         display_name = self.name
 
-        quantity = self.env.context.get('quantity', add_qty)
-        context = dict(self.env.context, quantity=quantity,
-                       pricelist=pricelist.id if pricelist else False)
+        quantity = self.env.context.get("quantity", add_qty)
+        context = dict(
+            self.env.context,
+            quantity=quantity,
+            pricelist=pricelist.id if pricelist else False,
+        )
         product_template = self.with_context(context)
 
-        combination = combination or product_template.env['product.template.attribute.value']
+        combination = (
+            combination or product_template.env["product.template.attribute.value"]
+        )
 
         if not product_id and not combination and not only_template:
             combination = product_template._get_first_possible_combination(
-                parent_combination)
+                parent_combination
+            )
 
         if only_template:
-            product = product_template.env['product.product']
+            product = product_template.env["product.product"]
         elif product_id and not combination:
-            product = product_template.env['product.product'].browse(
-                product_id)
+            product = product_template.env["product.product"].browse(product_id)
         else:
-            product = product_template._get_variant_for_combination(
-                combination)
+            product = product_template._get_variant_for_combination(combination)
 
         if product:
             # We need to add the price_extra for the attributes that are not
@@ -272,48 +325,60 @@ class ProductTemplate(models.Model):
             # possible that a no_variant attribute is still in a variant if
             # the type of the attribute has been changed after creation.
             no_variant_attributes_price_extra = [
-                ptav.price_extra for ptav in combination.filtered(
-                    lambda ptav:
-                        ptav.price_extra and
-                        ptav not in product.product_template_attribute_value_ids
+                ptav.price_extra
+                for ptav in combination.filtered(
+                    lambda ptav: ptav.price_extra
+                    and ptav not in product.product_template_attribute_value_ids
                 )
             ]
             if no_variant_attributes_price_extra:
                 product = product.with_context(
                     no_variant_attributes_price_extra=no_variant_attributes_price_extra
                 )
-            list_price = product.price_compute('list_price')[product.id]
+            list_price = product.price_compute("list_price")[product.id]
             price = product.price if pricelist else list_price
         else:
             product_template = product_template.with_context(
-                current_attributes_price_extra=[v.price_extra or 0.0 for v in combination])
-            list_price = product_template.price_compute(
-                'list_price')[product_template.id]
+                current_attributes_price_extra=[
+                    v.price_extra or 0.0 for v in combination
+                ]
+            )
+            list_price = product_template.price_compute("list_price")[
+                product_template.id
+            ]
             price = product_template.price if pricelist else list_price
 
         filtered_combination = combination._without_no_variant_attributes()
         if filtered_combination:
-            display_name = '%s (%s)' % (display_name, ', '.join(
-                filtered_combination.mapped('name')))
+            display_name = "%s (%s)" % (
+                display_name,
+                ", ".join(filtered_combination.mapped("name")),
+            )
 
         if pricelist and pricelist.currency_id != product_template.currency_id:
             list_price = product_template.currency_id._convert(
-                list_price, pricelist.currency_id, product_template._get_current_company(
-                    pricelist=pricelist),
-                fields.Date.today()
+                list_price,
+                pricelist.currency_id,
+                product_template._get_current_company(pricelist=pricelist),
+                fields.Date.today(),
             )
 
-        price_without_discount = list_price if pricelist and pricelist.discount_policy == 'without_discount' else price
-        has_discounted_price = (pricelist or product_template).currency_id.compare_amounts(
-            price_without_discount, price) == 1
+        price_without_discount = (
+            list_price
+            if pricelist and pricelist.discount_policy == "without_discount"
+            else price
+        )
+        has_discounted_price = (
+            pricelist or product_template
+        ).currency_id.compare_amounts(price_without_discount, price) == 1
 
         return {
-            'product_id': product.id,
-            'product_template_id': product_template.id,
-            'display_name': display_name,
-            'price': price,
-            'list_price': list_price,
-            'has_discounted_price': has_discounted_price,
+            "product_id": product.id,
+            "product_template_id": product_template.id,
+            "display_name": display_name,
+            "price": price,
+            "list_price": list_price,
+            "has_discounted_price": has_discounted_price,
         }
 
     @api.multi
@@ -333,13 +398,15 @@ class ProductTemplate(models.Model):
         if not self.active:
             # for performance: avoid calling `_get_possible_combinations`
             return False
-        return next(self._get_possible_combinations(parent_combination), False) is not False
+        return (
+            next(self._get_possible_combinations(parent_combination), False)
+            is not False
+        )
 
     @api.multi
     def _get_current_company_fallback(self, **kwargs):
         """Override: if a pricelist is given, fallback to the company of the
         pricelist if it is set, otherwise use the one from parent method."""
-        res = super(ProductTemplate,
-                    self)._get_current_company_fallback(**kwargs)
-        pricelist = kwargs.get('pricelist')
+        res = super(ProductTemplate, self)._get_current_company_fallback(**kwargs)
+        pricelist = kwargs.get("pricelist")
         return pricelist and pricelist.company_id or res
