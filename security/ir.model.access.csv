@@ -22,3 +22,7 @@ access_sale_order_portal,sale.order.portal,sale.model_sale_order,base.group_user
 access_sale_order_line_portal,sale.order.line.portal,sale.model_sale_order_line,base.group_user,1,0,0,0
 access_rem_property_group,access_rem_property_group,model_rem_property_group,base.group_user,1,1,1,1
 access_rem_property_type,access_rem_property_type,model_rem_property_type,base.group_user,1,1,1,1
+access_account_invoice_uinvoice,account.invoice,model_account_invoice,base.group_user,1,1,1,1
+access_account_invoice_portal,account.invoice.portal,account.model_account_invoice,base.group_user,1,0,0,0
+access_account_invoice_group_invoice,account.invoice group invoice,model_account_invoice,base.group_user,1,1,1,1
+access_account_invoice_accountant,account.invoice accountant,model_account_invoice,base.group_user,1,0,0,0

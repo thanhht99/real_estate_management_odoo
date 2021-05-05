@@ -38,6 +38,16 @@
                             </group>
                         </page>
                 </xpath>
+                <xpath expr="//page[@name='general_information']/group/group[1]" position="inside">
+                    <field name="group_name"/>
+                    <field name="type_name"/>
+                </xpath>
+                <xpath expr="//page[@name='general_information']/group/group[1]/field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']/group/group[1]/field[@name='categ_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//div[@name='options']/div[1]" position="after">
                     <div>
                         <field name="property_ok"/>
@@ -57,13 +67,19 @@
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='filter_to_purchase']" position="after">
                     <filter string="Can be Property" name="filter_to_property" domain="[('property_ok', '=', True)]"/>
-                </xpath>
+                </xpath>                          
             </field>
         </record>
 
+        <menuitem id="property_menu_main" 
+                name="Product"
+                sequence="1"
+                parent="main_real_estate"/>
+        
         <menuitem id="property_menu" 
                 name="Product"
+                sequence="1"
                 action="product_template_action"
-                parent="main_real_estate"/>
+                parent="property_menu_main"/>
 
 </odoo>

@@ -27,6 +27,7 @@
         'website_form',
         'digest',
         'website_mail',
+        'account',
     ],
 
     # always loaded
@@ -38,7 +39,7 @@
         'views/product_template_views.xml',
         'views/agency.xml',
         'views/sale_order_views.xml',
-        'views/type_and_group.xml',
+        'views/cart_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

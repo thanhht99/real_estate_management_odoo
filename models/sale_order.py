@@ -15,5 +15,5 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
     _description = "Extend sale order model"
 
-    agency_list = fields.Many2many('rem.agency', string='Agency List')
+    # agency_list = fields.Many2many('rem.agency', string='Agency List')
     sale_date = fields.Datetime(string='Sale Date', required=True)

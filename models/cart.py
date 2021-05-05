@@ -1,26 +1,17 @@
-# # -*- coding: utf-8 -*-
-# from odoo import api, fields, models, tools, _
-# from odoo.exceptions import UserError, ValidationError
+# -*- coding: utf-8 -*-
+import json
+import logging
+from datetime import timedelta, time
 
+from odoo import api, fields, models, _
+from odoo.addons.base.models.res_partner import WARNING_MESSAGE, WARNING_HELP
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools.float_utils import float_round
 
-# class create(models.Model):
-#     _name = "cart"
-#     # _inherit = ''
-#     _description = "My cart model"
+_logger = logging.getLogger(__name__)
 
-#     cart_name = fields.Char('Cart Name', required=True)
-#     # gender = fields.Selection([
-#     #     ('male', 'Male'),
-#     #     ('female', 'Female')
-#     # ], string='Gender', default='male')
-#     description = fields.Text('Cart Description')
-#     status = fields.Boolean('Status Cart')
-#     cart_image = fields.Binary(
-#         "Cart Image", attachment=True, help="Cart Image")
-#     product_ids = fields.Many2many(comodel_name='product.product',
-#                                    string="Related Products",
-#                                    relation='property_product_rel',
-#                                    column1='col_property_id',
-#                                    column2='col_product_id')
+class Cart(models.Model):
+    
+    _inherit = "account.invoice"
 
-#     property_code = fields.Many2many('property', string="Sản phẩm")
+    agency_list = fields.Many2many('rem.agency', string='Agency List')

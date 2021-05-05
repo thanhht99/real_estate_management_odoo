@@ -87,14 +87,14 @@
 
         <menuitem id="main_real_estate"
             name="Real Estate"            
-            sequence="10"
+            sequence="7"
             groups="base.group_user"/>
 
         <menuitem id="project_menu" 
                 name="Project"
-                action="action_project"
-                sequence="1"
-                parent="main_real_estate"/>
+                sequence="2"
+                action="action_project"                
+                parent="property_menu_main"/>
 
     </data>
 </odoo>

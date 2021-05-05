@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_invoice_tree1" model="ir.actions.act_window">
+            <field name="name">Cart</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice')]</field>
+            <field name="context">{'type':'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a customer invoice
+              </p><p>
+                Create invoices, register payments and keep track of the discussions with your customers.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_tree" model="ir.actions.act_window">
+            <field name="name">Invoices</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="context">{'type':'out_invoice'}</field>
+            <!-- <field name="search_view_id" ref="view_account_invoice_filter"/> -->
+        </record>
+
+        <record id="invoice_tree" model="ir.ui.view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
+                    <field name="partner_id" groups="base.group_user" string="Customer"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="commercial_partner_id" invisible="1"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="user_id"/>
+                    <field name="date_due"/>
+                    <field name="origin"/>
+                    <field name="amount_untaxed_invoice_signed" string="Tax Excluded" sum="Total"/>
+                    <field name="amount_tax_signed" string="Tax" sum="Total"/>
+                    <field name="amount_total_signed" string="Total" sum="Total"/>
+                    <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_currency_id" invisible="1"/>
+                    <field name="state"/>
+                    <field name="type" invisible="context.get('type',True)"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="view_account_invoice_filter" model="ir.ui.view">
+        <field name="name">account.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']" position="after">
+                <page string="Agency List" name="agency_list">
+                    <group name="group_agency">
+                        <field name="agency_list" string="Agency List"/>
+                    </group>                           
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_invoice_tree1_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <!-- <field name="view_id" ref="invoice_tree_with_onboarding"/> -->
+            <field name="act_window_id" ref="action_invoice_tree1"/>
+        </record>
+
+        <record id="action_invoice_tree1_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_tree1"/>
+        </record>
+
+    <!-- Main website sale menu items -->
+    <menuitem id="menu_orders" 
+        name="Cart"
+        sequence="4"
+        action="action_invoice_tree1" 
+        parent="main_real_estate"
+        groups="base.group_user"/>
+</odoo>
