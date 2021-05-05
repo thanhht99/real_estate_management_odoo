@@ -57,6 +57,19 @@
                 <xpath expr="//page[@name='purchase']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <xpath expr="//page[@name='general_information']/group/group[1]/field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']/group/group[1]/field[@name='categ_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']/group/group[1]" position="inside">
+                    <field name="group_name"/>
+                    <field name="group_isActive"/>
+                    <field name="type_name"/>
+                    <field name="type_isActive"/>
+                    <field name="sale_opening"/>
+                </xpath>
             </field>
         </record>
 
@@ -67,7 +80,31 @@
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='filter_to_purchase']" position="after">
                     <filter string="Can be Property" name="filter_to_property" domain="[('property_ok', '=', True)]"/>
+<<<<<<< HEAD
                 </xpath>                          
+=======
+                </xpath>
+                <xpath expr="//search" position="inside">
+                    <field name="group_name"></field>
+                    <field name="type_name"></field>
+                    <filter string="Group" name="filter_group" domain="[('group_isActive', '=', 'True')]"></filter>
+                    <filter string="Type" name="filter_type" domain="[('type_isActive', '=', 'True')]"></filter>
+                    <filter string="Opening" name="filter_opening" domain="[('sale_opening', '=', 'opening')]"></filter>
+                    <filter string="NoOpening" name="filter_noopening" domain="[('sale_opening', '=', 'noopening')]"></filter>
+                </xpath>
+                <xpath expr="//search/filter[@name='inactive']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//search/filter[@name='activities_overdue']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//search/filter[@name='activities_today']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//search/filter[@name='activities_upcoming_all']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+>>>>>>> 1dc62c07778de0316aa6cc2aae173868ddbab2b8
             </field>
         </record>
 
