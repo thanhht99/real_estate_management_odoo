@@ -107,12 +107,7 @@
         <menuitem id="property_menu_main" 
                 name="Product"
                 sequence="1"
-                parent="main_real_estate"/>
-        
-        <menuitem id="property_menu" 
-                name="Product"
-                sequence="1"
                 action="product_template_action"
-                parent="property_menu_main"/>
+                parent="main_real_estate"/>
 
 </odoo>

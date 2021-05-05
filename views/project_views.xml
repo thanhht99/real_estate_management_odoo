@@ -94,7 +94,7 @@
                 name="Project"
                 sequence="2"
                 action="action_project"                
-                parent="property_menu_main"/>
+                parent="main_real_estate"/>
 
     </data>
 </odoo>
