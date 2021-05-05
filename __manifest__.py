@@ -39,10 +39,7 @@
         'views/product_template_views.xml',
         'views/agency.xml',
         'views/sale_order_views.xml',
-<<<<<<< HEAD
         'views/cart_views.xml',
-=======
->>>>>>> 1dc62c07778de0316aa6cc2aae173868ddbab2b8
     ],
     # only loaded in demonstration mode
     'demo': [
