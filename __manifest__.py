@@ -39,7 +39,7 @@
         'views/product_template_views.xml',
         'views/agency.xml',
         'views/sale_order_views.xml',
-        'views/cart_views.xml',
+        'views/cart.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

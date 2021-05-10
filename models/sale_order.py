@@ -17,3 +17,9 @@ class SaleOrder(models.Model):
 
     # agency_list = fields.Many2many('rem.agency', string='Agency List')
     sale_date = fields.Datetime(string='Sale Date', required=True)
+
+    partner_group = fields.Selection([
+        ('normal', 'Normal'),
+        ('real_estate_investors', 'Real Estate Investors'),
+        ('businessmen', 'Businessmen')
+    ], string='Partner Group', default='normal')

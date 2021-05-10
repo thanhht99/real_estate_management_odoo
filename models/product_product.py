@@ -15,6 +15,8 @@ class ProductTemplate(models.Model):
     parcel_number = fields.Integer('Property parcel number')
     area = fields.Float('Property Area (m2)', required=True)
 
+    project_id = fields.Many2one('rem.project', string="Project")
+
     transaction_status = fields.Selection([
         ('csfs', 'Coming soon for sale'),
         ('ofs', 'Open for sale')

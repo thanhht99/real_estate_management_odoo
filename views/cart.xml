@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="cart_form_view" model="ir.ui.view">
+            <field name="name">rem.cart.form.view</field>
+            <field name="model">rem.cart</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Cart Name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Dự án đợt 1"/></h1>
+                            <label for="project_id"/>
+                            <h3><field name="project_id"/></h3>
+                        </div>
+                        <group name="images">
+                            <group>
+                                <!-- <field name="company"/>                                 -->
+                                <field name="date_of_sale"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>                            
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="cart_tree_view" model="ir.ui.view">
+            <field name="name">rem.cart.tree.view</field>
+            <field name="model">rem.cart</field>
+            <field name="arch" type="xml">
+                <tree string="Cart" default_order="create_date desc">
+                    <field name="date_of_sale"/>
+                    <field name="end_date"/>                                     
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_cart" model="ir.actions.act_window">
+            <field name="name">Cart</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rem.cart</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('cart_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('cart_form_view')})]"/>
+        </record>
+
+        <menuitem id="cart_menu" 
+                name="Cart"
+                sequence="4"
+                action="action_cart"
+                parent="main_real_estate"/>
+
+    </data>
+</odoo>

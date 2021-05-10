@@ -11,7 +11,12 @@ from odoo.tools.float_utils import float_round
 _logger = logging.getLogger(__name__)
 
 class Cart(models.Model):
-    
-    _inherit = "account.invoice"
+    _name = 'rem.cart'
+    _description = "Cart Real Estate"
 
-    agency_list = fields.Many2many('rem.agency', string='Agency List')
+    name = fields.Char(string="Cart name", required=True)
+
+    date_of_sale = fields.Datetime(string='Date of sale', required=True)
+    end_date = fields.Datetime(string='End date', required=True)
+
+    project_id = fields.Many2one('rem.project', string="Project")

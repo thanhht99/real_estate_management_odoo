@@ -19,11 +19,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group/group[2]" position="inside">
-                <field name="sale_date"/>
+            <xpath expr="//group/group[1]" position="inside">
+                <field name="partner_group" options='{"always_reload": True}'/>
             </xpath>
             <xpath expr="//group/group[2]/field[@name='validity_date']" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="string">Date Set</attribute>
             </xpath>
             <!-- <xpath expr="//page[@name='other_information']" position="after">
                 <page string="Agency List" name="agency_list">

@@ -6,14 +6,14 @@ class PropertyGroup(models.Model):
     _description = "Set group for property"
 
     name = fields.Char(string="Group name", required=True)
-    isActive = fields.Boolean('Group', default='True')
+    isActive = fields.Boolean(default='True')
 
 class PropertyType(models.Model):
     _name = 'rem.property.type'
     _description = "Set type for property"
 
     name = fields.Char(string="Type name", required=True)
-    isActive = fields.Boolean('Type', default='True')
+    isActive = fields.Boolean(default='True')
 
 class PropertyAddSet(models.Model):
     _name = 'product.template'
