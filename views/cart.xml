@@ -10,12 +10,12 @@
                         <div class="oe_title">
                             <label for="name" string="Cart Name" class="oe_edit_only"/>
                             <h1><field name="name" placeholder="Dự án đợt 1"/></h1>
-                            <label for="project_id"/>
-                            <h3><field name="project_id"/></h3>
+                            <label for="project"/>
+                            <h3><field name="project"/></h3>
                         </div>
                         <group name="images">
                             <group>
-                                <!-- <field name="company"/>                                 -->
+                                <!-- <field name="company"/> -->
                                 <field name="date_of_sale"/>
                             </group>
                             <group>
@@ -25,7 +25,7 @@
                         <notebook>
                             <page name="products_list" string="List of products">
 								<group name="group_products_list">
-									<field name="products_list"/>
+									<field name="products_list" domain="[('property_ok','=',True),('project_id','=',project)]"/>
 								</group>
 							</page>						
 						</notebook>
