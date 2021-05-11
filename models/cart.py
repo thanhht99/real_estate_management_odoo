@@ -20,3 +20,4 @@ class Cart(models.Model):
     end_date = fields.Datetime(string='End date', required=True)
 
     project_id = fields.Many2one('rem.project', string="Project")
+    products_list = fields.Many2many('product.template', string="List of products")

@@ -32,6 +32,7 @@
                                     <field name="description" string="Describe"/>
                                 </group>
                                 <group name="group_bds2">
+                                    <field name="project_id"/>
                                     <field name="area" string="Acreage"/>
                                     <field name="parcel_number" string="Number of plots"/>
                                 </group>

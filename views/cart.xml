@@ -22,6 +22,13 @@
                                 <field name="end_date"/>
                             </group>                            
                         </group>
+                        <notebook>
+                            <page name="products_list" string="List of products">
+								<group name="group_products_list">
+									<field name="products_list"/>
+								</group>
+							</page>						
+						</notebook>
                     </sheet>
                 </form>
             </field>
@@ -32,6 +39,7 @@
             <field name="model">rem.cart</field>
             <field name="arch" type="xml">
                 <tree string="Cart" default_order="create_date desc">
+                    <field name="name"/>
                     <field name="date_of_sale"/>
                     <field name="end_date"/>                                     
                 </tree>
