@@ -38,7 +38,7 @@
         'views/product_views.xml',
         'views/product_template_views.xml',
         'views/agency.xml',
-        'views/sale_order_views.xml',
+        'views/placeholder.xml',
         'views/cart.xml',
     ],
     # only loaded in demonstration mode
