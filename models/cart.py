@@ -22,3 +22,5 @@ class Cart(models.Model):
     project = fields.Many2one('rem.project', string="Project", required=True)
 
     products_list = fields.Many2many('product.template', string="List of products", required=True)
+
+    

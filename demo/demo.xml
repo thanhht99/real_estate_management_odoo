@@ -70,27 +70,6 @@
             <field name="email">info@savills.com.vn</field>
             <field name="website">www.savills.com.vn</field>
         </record>
-        <record id="product_property1" model="product.product">
-            <field name="name">Bình Minh Garden Căn hộ CH-02A</field>
-            <!-- <field name="categ_id" ref="product_category_4"/> -->
-            <field name="standard_price">100000000.0</field>
-            <field name="list_price">2510000000.0</field>
-            <field name="type">consu</field>
-            <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
-            <field name="default_code">CH02A_BMG_LBHN</field>
-            <field name="image" type="base64" file="real_estate_management_odoo/static/img/CH02A.png"/>
-        </record>
-        <record id="product_property2" model="product.product">
-            <field name="name">Bình Minh Garden Căn hộ CH-03A</field>
-            <!-- <field name="categ_id" ref="product_category_4"/> -->
-            <field name="standard_price">100000000.0</field>
-            <field name="list_price">4320000000.0</field>
-            <field name="type">consu</field>
-            <!-- <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/> -->
-            <field name="default_code">CH03A_BMG_LBHN</field>
-            <field name="image" type="base64" file="real_estate_management_odoo/static/img/CH03A.png"/>
-        </record>
+        
     </data>
 </odoo>

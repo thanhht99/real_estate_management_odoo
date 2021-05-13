@@ -23,16 +23,14 @@
                             </group>                            
                         </group>
                         <notebook>
-                            <page name="products_list" string="List of products">
-								<group name="group_products_list">
-									<field name="products_list" domain="[('property_ok','=',True),('project_id','=',project)]"/>
-								</group>
-							</page>						
+                            <page name="products_list2" string="List of products" >
+                                <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]" widget="many2many_checkboxes"/>                      	
+                            </page>						
 						</notebook>
                     </sheet>
                 </form>
             </field>
-        </record>
+        </record>        
 
         <record id="cart_tree_view" model="ir.ui.view">
             <field name="name">rem.cart.tree.view</field>

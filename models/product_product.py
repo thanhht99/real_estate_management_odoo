@@ -16,6 +16,7 @@ class ProductTemplate(models.Model):
     area = fields.Float('Property Area (m2)', required=True)
 
     project_id = fields.Many2one('rem.project', string="Project", required=True)
+    cart_id = fields.Many2one('rem.cart', string="Cart", readonly=True)
 
     transaction_status = fields.Selection([
         ('csfs', 'Coming soon for sale'),

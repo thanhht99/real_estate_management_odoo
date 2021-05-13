@@ -19,7 +19,7 @@ class PropertyAddSet(models.Model):
     _name = 'product.template'
     _inherit = 'product.template'    
 
-    sale_opening = fields.Selection([('opening','Opening'),('noopening','Noopening')],'Set', default='opening',help='')
+    sale_opening = fields.Selection([('opening','Opening'),('noopening','Noopening'),('sold','Sold')],'Set', default='noopening',help='')
 
     group_name = fields.Many2one('rem.property.group',string='Group Name')
     group_isActive = fields.Boolean('Group', related='group_name.isActive')
