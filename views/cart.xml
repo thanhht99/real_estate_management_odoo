@@ -23,8 +23,18 @@
                             </group>                            
                         </group>
                         <notebook>
-                            <page name="products_list2" string="List of products" >
-                                <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]" widget="many2many_checkboxes"/>                      	
+                            <page name="cart_lines" string="List of products" >
+                                <!-- <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]"/>                      	 -->
+                                <field name="cart_line" widget="section_and_note_one2many" mode="tree">
+                                    <tree editable="bottom">
+                                        <control>
+                                            <create string="Add a product"/>
+                                        </control>                                        
+                                        <field name="product_id"/>
+                                        <field name="price"/>
+                                        <!-- <field name="product_uom_qty" string="Ordered Qty"/> -->
+                                    </tree>
+                                </field>
                             </page>						
 						</notebook>
                     </sheet>

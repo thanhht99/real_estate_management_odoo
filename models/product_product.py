@@ -16,13 +16,7 @@ class ProductTemplate(models.Model):
     area = fields.Float('Property Area (m2)', required=True)
 
     project_id = fields.Many2one('rem.project', string="Project", required=True)
-    cart_id = fields.Many2one('rem.cart', string="Cart", readonly=True)
-
-    transaction_status = fields.Selection([
-        ('csfs', 'Coming soon for sale'),
-        ('ofs', 'Open for sale')
-    ], string='Transaction status', default='csfs')
-
+   
     optional_product_ids = fields.Many2many(
         'product.template', 'product_optional_rel', 'src_id', 'dest_id',
         string='Optional Products', help="Optional Products are suggested "
@@ -34,6 +28,11 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     sales_count = fields.Float(compute='_compute_sales_count', string='Sold')
+
+    transaction_status = fields.Selection([
+        ('csfs', 'Coming soon for sale'),
+        ('ofs', 'Open for sale')
+    ], string='Transaction status', default='csfs')
 
     @api.multi
     def _compute_sales_count(self):

@@ -10,17 +10,28 @@ from odoo.tools.float_utils import float_round
 
 _logger = logging.getLogger(__name__)
 
+
+class CartLine(models.Model):
+    _name = 'rem.cart.line'
+
+    product_id =  fields.Many2one('product.product', string="Product")
+    price = fields.Char(string="Price")
+    cart_id = fields.Many2one('rem.cart', required=True)
+
 class Cart(models.Model):
     _name = 'rem.cart'
     _description = "Cart Real Estate"
 
     name = fields.Char(string="Cart name", required=True)
-
+    # state = fields.Selection()
     date_of_sale = fields.Datetime(string='Date of sale', required=True)
     end_date = fields.Datetime(string='End date', required=True)
 
     project = fields.Many2one('rem.project', string="Project", required=True)
 
-    products_list = fields.Many2many('product.template', string="List of products", required=True)
+    # products_list =  fields.Many2many('product.product', string="Product", required=True)
 
-    
+
+    cart_line = fields.One2many('rem.cart.line', 'cart_id', string="List of products", copy=True, auto_join=True)
+
+    # def create(self,values)

@@ -18,6 +18,16 @@ class Placeholder(models.Model):
 
     cart = fields.Many2one('rem.cart', string="Cart", required=True)
 
-    products = fields.Many2many(related='cart.products_list')
+    product_id = fields.Many2one('product.product', required=True)
 
+    # products_list = fields.Selection('products', string="List of products", required=True)
+
+    @api.onchange('cart_id')
+    def onchange_cart(self):
+        products = self.cart_id.line_ids.mapped(lambda line: line.product_id)
+        return {
+            'domain': {
+                'product_id': [('id', 'in', products.ids)]
+            }
+        }
     
