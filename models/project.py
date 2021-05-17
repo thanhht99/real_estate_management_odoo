@@ -26,8 +26,8 @@ class Project(models.Model):
 
 
     _sql_constraints = [        
-        ('name_unique',
-         'UNIQUE(name)',
-         "The course title must be unique"),
+        ('code_unique',
+         'UNIQUE(code)',
+         "The code must be unique"),
     ]
 
