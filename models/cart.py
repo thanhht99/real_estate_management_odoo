@@ -30,6 +30,7 @@ class Cart(models.Model):
 
     
 
+<<<<<<< HEAD
     # @api.model
     # def create(self,values):
     #     valp = {}
@@ -40,6 +41,15 @@ class Cart(models.Model):
     #     return new_record
     
 
+=======
+
+    # def create(self,values)
+    @api.multi
+    def action_open(self):
+        self.ensure_one()
+        self.state = 'open'
+        self.cart_line.mapped('product_id').write({'sdsd': dsd})
+>>>>>>> origin/origin/dibang
 
 class CartLine(models.Model):
     _name = 'rem.cart.line'
@@ -50,12 +60,15 @@ class CartLine(models.Model):
     project_code = fields.Char(string='Code Project')
     product_id = fields.Many2one('product.product', string='Product', change_default=True, ondelete='restrict')
 
-    price = fields.Char(string="Price")
+    price = fields.Float(string="Price")
 
     @api.onchange('cart_id')
     def a_id_onchange(self):
+        output = "sample result"
+        _logger.exception('--------------------------------------------------------  %s', output)
         if self.cart_id:
             self.project_code = self.cart_id.project.code
+<<<<<<< HEAD
             final_str = "%s" % (product_id)
             output = "sample result"
             _logger.exception('--------------------------------------------------------  %s', final_str)
@@ -83,3 +96,7 @@ class CartLine(models.Model):
     #     return new_record
     
     
+=======
+
+
+>>>>>>> origin/origin/dibang
