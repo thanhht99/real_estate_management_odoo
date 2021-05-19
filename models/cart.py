@@ -25,31 +25,14 @@ class Cart(models.Model):
 
     # products_list =  fields.Many2many('product.product', string="Product", required=True)
 
-
     cart_line = fields.One2many('rem.cart.line', 'cart_id', string="Cart Lines", copy=True, auto_join=True)
-
     
-
-<<<<<<< HEAD
-    # @api.model
-    # def create(self,values):
-    #     valp = {}
-    #     valp['sale_opening'] = 'opening'
-    #     prd = self.env['product.product'].create(valp)
-    #     values['cart_line'] = prd.id
-    #     new_record = super(Cart, self).create(values)
-    #     return new_record
-    
-
-=======
-
     # def create(self,values)
-    @api.multi
-    def action_open(self):
-        self.ensure_one()
-        self.state = 'open'
-        self.cart_line.mapped('product_id').write({'sdsd': dsd})
->>>>>>> origin/origin/dibang
+    # @api.multi
+    # def action_open(self):
+    #     self.ensure_one()
+    #     self.state = 'open'
+    #     self.cart_line.mapped('product_id').write({'sdsd': dsd})
 
 class CartLine(models.Model):
     _name = 'rem.cart.line'
@@ -68,35 +51,5 @@ class CartLine(models.Model):
         _logger.exception('--------------------------------------------------------  %s', output)
         if self.cart_id:
             self.project_code = self.cart_id.project.code
-<<<<<<< HEAD
-            final_str = "%s" % (product_id)
-            output = "sample result"
-            _logger.exception('--------------------------------------------------------  %s', final_str)
-            _logger.exception('-----0000000------------------------  %s', output)
 
 
-    @api.multi
-    def write(self,vals):
-        vals.product_id.update({'sale_opening': 'opening'})
-        output = "sample result"
-        _logger.exception('--------------------------------------------------------  %s', output)
-        return super(CartLine, self).write(vals) 
-
-    # @api.model
-    # def create(self,vals):
-    #     valp = {}
-    #     # valp['id'] = vals['cart_line.product_id.product_tmpl_id']
-    #     valp['list_price'] = vals['price']
-    #     valp['sale_opening'] = 'opening'
-    #     prd = self.env['product.template'].create(valp)
-    #     vals['product_id'] = prd.id
-    #     new_record = super(CartLine, self).create(vals)
-    #     output = "sample result11111111111111111111111111111111"
-    #     _logger.exception('------ewr322222222222222222242222222222222222222222222222---------  %s', output)
-    #     return new_record
-    
-    
-=======
-
-
->>>>>>> origin/origin/dibang

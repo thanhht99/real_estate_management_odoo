@@ -6,6 +6,9 @@
             <field name="model">rem.cart</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                            <button name="action_invoice_open" type="object" states="draft" string="Validate" class="oe_highlight"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <label for="name" string="Cart Name" class="oe_edit_only"/>
@@ -33,7 +36,6 @@
                                         <field name="project_code" invisible="1"/> 
                                         <field name="product_id" force_save="1" domain="[('project_id.code','=',project_code),('property_ok','=',True),('sale_opening','=','noopening')]"/>
                                         <field name="price"/>
-                                        <field name="project_code"/>
                                         <field name="cart_id" invisible="1"/>
                                     </tree>
                                 </field>
