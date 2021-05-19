@@ -23,6 +23,13 @@ class Cart(models.Model):
 
     project = fields.Many2one('rem.project', string="Project", required=True)
 
+    state = fields.Selection([
+        ('draft', 'Quotation'),
+        ('open', 'Sale Open'),
+        ('soldout', 'Sold Out'),
+        ('done', 'Locked'),
+        ('cancel', 'Cancelled'),
+        ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
     # products_list =  fields.Many2many('product.product', string="Product", required=True)
 
 
@@ -39,7 +46,12 @@ class Cart(models.Model):
     def action_open(self):
         self.ensure_one()
         self.state = 'open'
-        self.cart_line.mapped('product_id').write({'sdsd': dsd})
+        self.cart_line.mapped('product_id').write({'sale_opening': 'opening'})
+
+    @api.multi
+    def action_soldout(self):
+        self.ensure_one()
+        self.state = 'soldout'
 
 class CartLine(models.Model):
     _name = 'rem.cart.line'

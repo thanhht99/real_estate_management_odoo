@@ -22,6 +22,10 @@ class Placeholder(models.Model):
 
     cart = fields.Many2one('rem.cart', string="Cart", required=True)
 
+    price_holder = fields.Float(string='Cost to holder')
+
+    partner_id = fields.Many2one('res.partner', required=True)
+
     # product = fields.Many2one('product.product', required=True)
 
     placeholder_line = fields.One2many(
