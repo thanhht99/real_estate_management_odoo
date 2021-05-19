@@ -32,7 +32,7 @@
                                         </control>       
                                         <field name="product_id" force_save="1" domain="[('project_id.code','=',project_code),('property_ok','=',True),('sale_opening','=','noopening')]"/>
                                         <field name="price"/>
-                                        <field name="project_code" invisible="1"/>
+                                        <field name="project_code"/>
                                         <field name="cart_id" invisible="1"/>
                                     </tree>
                                 </field>
