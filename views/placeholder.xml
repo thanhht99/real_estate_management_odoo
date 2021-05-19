@@ -14,10 +14,19 @@
                             <h3><field name="cart"/></h3>
                         </div>                        
                         <notebook>
-                            <page name="products_list2" string="List of products" >
-                                <!-- <field name="products" widget="many2many_kanban"/>                      	 -->
-                                <!-- <field name="products_list" />                      	 -->
-                            </page>						
+                            <page name="placeholder_lines" string="List of products" >
+                                <!-- <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]"/>                      	 -->
+                                <field name="placeholder_line" widget="section_and_note_one2many" mode="tree">
+                                    <tree editable="bottom">     
+                                        <control>
+                                            <create string="Add a product"/>
+                                        </control>
+                                        <field name="cart_name" /> 
+                                        <field name="product_id" force_save="1" />                              
+                                        <field name="placeholder_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>							
 						</notebook>
                     </sheet>
                 </form>
