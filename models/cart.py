@@ -24,7 +24,7 @@ class Cart(models.Model):
     project = fields.Many2one('rem.project', string="Project", required=True)
 
     state = fields.Selection([
-        ('draft', 'Quotation'),
+        ('draft', 'Draft'),
         ('open', 'Sale Open'),
         ('soldout', 'Sold Out'),
         ('done', 'Locked'),

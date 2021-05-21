@@ -107,7 +107,7 @@
 
         <menuitem id="property_menu_main" 
                 name="Product"
-                sequence="1"
+                sequence="2"
                 action="product_template_action"
                 parent="main_real_estate"/>
 

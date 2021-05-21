@@ -40,6 +40,7 @@
         'views/agency.xml',
         'views/placeholder.xml',
         'views/cart.xml',
+        'views/contacts.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

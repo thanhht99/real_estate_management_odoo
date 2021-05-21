@@ -92,7 +92,7 @@
 
         <menuitem id="project_menu" 
                 name="Project"
-                sequence="2"
+                sequence="1"
                 action="action_project"                
                 parent="main_real_estate"/>
 

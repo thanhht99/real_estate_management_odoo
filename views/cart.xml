@@ -78,7 +78,7 @@
 
         <menuitem id="cart_menu" 
                 name="Cart"
-                sequence="4"
+                sequence="3"
                 action="action_cart"
                 parent="main_real_estate"/>
 
