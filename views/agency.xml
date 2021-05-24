@@ -73,7 +73,7 @@
 
         <menuitem id="agency_menu" 
                 name="Agency"
-                sequence="5"
+                sequence="6"
                 action="action_agency"
                 parent="main_real_estate"/>
 

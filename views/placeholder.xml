@@ -12,21 +12,28 @@
                             <h1><field name="name" placeholder="..."/></h1>
                             <label for="cart"/>
                             <h3><field name="cart"/></h3>
-                        </div>                        
+                        </div>
+                    <group name="group_information">
+                        <group>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="price_holder"/>
+                        </group>
+                    </group>                     
                         <notebook>
                             <page name="placeholder_lines" string="List of products" >
-                                <!-- <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]"/>                      	 -->
                                 <field name="placeholder_line" widget="section_and_note_one2many" mode="tree">
                                     <tree editable="bottom">     
                                         <control>
                                             <create string="Add a product"/>
-                                        </control>
-                                        <field name="cart_name" /> 
-                                        <field name="product_id" force_save="1" />                              
+                                        </control>       
+                                        <field name="product_id" force_save="1"/>
+                                        <field name="price"/>
                                         <field name="placeholder_id" invisible="1"/>
                                     </tree>
                                 </field>
-                            </page>							
+                            </page>						
 						</notebook>
                     </sheet>
                 </form>
@@ -57,7 +64,7 @@
 
         <menuitem id="menu_placeholder" 
                 name="Placeholder"
-                sequence="2"
+                sequence="4"
                 action="action_placeholder"
                 parent="main_real_estate"
                 groups="base.group_user"/>
