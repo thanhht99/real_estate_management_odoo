@@ -23,6 +23,13 @@ class Cart(models.Model):
 
     project = fields.Many2one('rem.project', string="Project", required=True)
 
+    state = fields.Selection([
+        ('draft', 'Quotation'),
+        ('open', 'Sale Open'),
+        ('soldout', 'Sold Out'),
+        ('done', 'Locked'),
+        ('cancel', 'Cancelled'),
+        ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
     # products_list =  fields.Many2many('product.product', string="Product", required=True)
 
 
@@ -35,7 +42,16 @@ class Cart(models.Model):
 
 
     # def create(self,values)
+    @api.multi
+    def action_open(self):
+        self.ensure_one()
+        self.state = 'open'
+        self.cart_line.mapped('product_id').write({'sale_opening': 'opening'})
 
+    @api.multi
+    def action_soldout(self):
+        self.ensure_one()
+        self.state = 'soldout'
 
 class CartLine(models.Model):
     _name = 'rem.cart.line'
@@ -44,9 +60,13 @@ class CartLine(models.Model):
     project_code = fields.Char(string='Code Project')
     product_id = fields.Many2one('product.product', string='Product', change_default=True, ondelete='restrict')
 
-    price = fields.Char(string="Price")
+    price = fields.Float(string="Price")
 
     @api.onchange('cart_id')
     def a_id_onchange(self):
+        output = "sample result"
+        _logger.exception('--------------------------------------------------------  %s', output)
         if self.cart_id:
             self.project_code = self.cart_id.project.code
+
+
