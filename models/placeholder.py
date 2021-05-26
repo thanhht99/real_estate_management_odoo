@@ -15,6 +15,7 @@ _logger = logging.getLogger(__name__)
 
 class Placeholder(models.Model):
     _name = 'rem.placeholder'
+    
 
     _description = "Placeholder Real Estate"
 
@@ -41,7 +42,7 @@ class Placeholder(models.Model):
         ('paid', 'Paid'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
-        ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
+    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
 
     # product = fields.Many2one('product.product', required=True)
 
@@ -53,13 +54,16 @@ class Placeholder(models.Model):
     def action_validate(self):
         self.ensure_one()
         self.state = 'validate'
-        
+        # self.placeholder_line.mapped('product_id').write(
+        #     {'sale_opening': 'deposited'})
 
     @api.multi
     def action_paid(self):
         self.ensure_one()
         self.state = 'paid'
-        self.cart_line.mapped('product_id').write({'sale_opening': 'sold'})
+        self.placeholder_line.mapped('product_id').write(
+            {'sale_opening': 'deposited'})
+
 
 class PlaceholderLine(models.Model):
     _name = 'rem.placeholder.line'
