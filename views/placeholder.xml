@@ -31,6 +31,9 @@
                         <group>
                             <field name="payment_term"/>
                         </group>
+                        <group>
+                            <field name="payment_id"/>
+                        </group>
                     </group>                     
                         <notebook>
                             <page name="placeholder_lines" string="List of products" >
@@ -39,7 +42,7 @@
                                         <control>
                                             <create string="Add a product"/>
                                         </control>       
-                                        <field name="product_id" force_save="1"/>
+                                        <field name="product_id" force_save="1" />
                                         <field name="price"/>
                                         <field name="placeholder_id" invisible="1"/>
                                     </tree>
@@ -71,7 +74,6 @@
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('placeholder_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('placeholder_form_view')})]"/>
         </record>
-
 
         <menuitem id="menu_placeholder" 
                 name="Placeholder"

@@ -10,7 +10,7 @@
                         <button name="action_open" string="Open" type="object" class="oe_highlight" groups="base.group_user"/>
                         <!-- <button name="action_invoice_sent" string="Send &amp; Print" type="object" attrs="{'invisible':['|',('sent','=',False), ('state', 'not in', ('open','in_payment','paid'))]}" groups="base.group_user"/>
                         <button name="161" id="account_invoice_payment_btn" type="action" attrs="{'invisible': [('state', '!=', 'open')]}" string="Register Payment" groups="base.group_user" class="oe_highlight"/> -->
-                        <button name="action_soldout" type="object" states="open" string="Validate" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
+                        <button name="action_soldout" type="object" states="open" string="Sold out" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
                         <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
                         <button name="preview_invoice" type="object" string="Preview"/> -->
                         <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
@@ -23,8 +23,10 @@
                             <label for="project"/>
                             <h3><field name="project"/></h3>
                         </div>
-                        <
-                        < name="images">
+                        <group>
+                            <field name="open_sale_location"/>
+                        </group>
+                        <group name="images">
                             <group>
                                 <!-- <field name="company"/> -->
                                 <field name="date_of_sale"/>
@@ -32,7 +34,7 @@
                             <group>
                                 <field name="end_date"/>
                             </group>                            
-                        </>
+                        </group>
                         <notebook>
                             <page name="cart_lines" string="List of products" >
                                 <!-- <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]"/>                      	 -->
