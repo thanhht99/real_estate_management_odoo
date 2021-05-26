@@ -6,6 +6,14 @@
             <field name="model">rem.placeholder</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                    <button name="action_validate" string="Validate" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="action_paid" type="object" states="validate" string="Validate" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
+                    <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
+                    <button name="preview_invoice" type="object" string="Preview"/> -->
+                    <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,soldout"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <label for="name" string="Placeholder Name" class="oe_edit_only"/>
@@ -19,6 +27,9 @@
                         </group>
                         <group>
                             <field name="price_holder"/>
+                        </group>
+                        <group>
+                            <field name="payment_term"/>
                         </group>
                     </group>                     
                         <notebook>

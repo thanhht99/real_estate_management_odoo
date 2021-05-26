@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 class Placeholder(models.Model):
     _name = 'rem.placeholder'
-    
+
     _description = "Placeholder Real Estate"
 
     name = fields.Char(string="Placeholder name", required=True)
@@ -26,12 +26,40 @@ class Placeholder(models.Model):
 
     partner_id = fields.Many2one('res.partner', required=True)
 
+    payment_term = fields.Selection([
+        ('nocost', 'No Cost'),
+        ('oneweek', '1 Week'),
+        ('twoweek', '2 Week'),
+        ('onemonth', '1 Month'),
+        ('twomonth', '2 Month'),
+        ('sixmonth', '6 Month'),
+    ])
+
+    state = fields.Selection([
+        ('draft', 'Quotation'),
+        ('validate', 'Validate Placeholder'),
+        ('paid', 'Paid'),
+        ('done', 'Locked'),
+        ('cancel', 'Cancelled'),
+        ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
+
     # product = fields.Many2one('product.product', required=True)
 
     placeholder_line = fields.One2many(
         'rem.placeholder.line', 'placeholder_id', string="Placeholder Lines", copy=True, auto_join=True)
     # products_list = fields.Selection('products', string="List of products", required=True)
 
+    @api.multi
+    def action_validate(self):
+        self.ensure_one()
+        self.state = 'validate'
+        
+
+    @api.multi
+    def action_paid(self):
+        self.ensure_one()
+        self.state = 'paid'
+        self.cart_line.mapped('product_id').write({'sale_opening': 'sold'})
 
 class PlaceholderLine(models.Model):
     _name = 'rem.placeholder.line'
@@ -46,19 +74,19 @@ class PlaceholderLine(models.Model):
     @api.depends('product_id', 'placeholder_id.cart')
     def _compute_price(self):
         for rec in self:
-            line = rec.placeholder_id.cart.cart_line.filtered(lambda line: line.product_id == rec.product_id)
+            line = rec.placeholder_id.cart.cart_line.filtered(
+                lambda line: line.product_id == rec.product_id)
             rec.price = line.price
 
     @api.onchange('placeholder_id')
     def onchange_cart(self):
         output = "sample result"
-        _logger.exception('--------------------------------------------------------  %s', output)         
-        products = self.placeholder_id.cart.cart_line.mapped(lambda line: line.product_id)
+        _logger.exception(
+            '--------------------------------------------------------  %s', output)
+        products = self.placeholder_id.cart.cart_line.mapped(
+            lambda line: line.product_id)
         return {
             'domain': {
                 'product_id': [('id', 'in', products.ids)]
-            }            
+            }
         }
-
-        
-
