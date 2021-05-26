@@ -23,6 +23,8 @@ class Cart(models.Model):
 
     project = fields.Many2one('rem.project', string="Project", required=True)
 
+    contact = fields.Many2many('res.partner', string="Contact", required=True)
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('open', 'Sale Open'),
@@ -55,7 +57,13 @@ class CartLine(models.Model):
     project_code = fields.Char(string='Code Project')
     product_id = fields.Many2one('product.product', string='Product', change_default=True, ondelete='restrict')
 
-    price = fields.Float(string="Price")
+    price = fields.Float(string="Price", compute="_compute_price")
+
+    @api.depends('product_id', 'cart_id.project')
+    def _compute_price(self):
+        for rec in self:
+            line = rec.filtered(lambda line: line.product_id == rec.product_id)
+            rec.list_price = line.price
 
     @api.onchange('cart_id')
     def a_id_onchange(self):
