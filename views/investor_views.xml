@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="investor_form_view" model="ir.ui.view">
+            <field name="name">rem.investor.form.view</field>
+            <field name="model">rem.investor</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                    options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Company..." />
+                            </h1>
+                            <!-- <h2>
+                                <field name="vendor" placeholder="Vendor's name ..."></field>
+                            </h2> -->
+                            <group>
+                                <field name="isVendor" string="Vendor"/>
+                                <!-- <field name="isCustomer" string="isCustomer"/> -->
+                            </group>
+                        </div>
+            
+                        <group>
+                            <group>
+                                <field name="taxcode"></field>
+                                <field name="address"></field>
+                                <field name="website"></field>
+                            </group>
+                            <group>
+                                <field name="phone"></field>
+                                <field name="mobile"></field>
+                                <field name="email"></field>
+                            </group>
+                        </group>
+            
+                        <notebook>
+                            <page name="add_infomation" string="More Informations">
+                                <field name="description" placeholder="About Vendor and Company..."/>
+                            </page>
+                            <page name='sales_purchases' string="Sales &amp; Purchases">
+                                <group name="container_row_2">
+                                    <group string="Sales" name="sale" priority="1">
+                                        <field name="isCustomer"/>
+                                        <field name="vendor"/>
+                                    </group>
+                                    <group string="Purchase" name="purchase" priority="2">
+                                        <field name="isVendor"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="invoicing" string="Invoicing">
+                                <group string="Bank Accounts">
+                                    <tree editable="bottom">
+                                        <field name="bank_ids"></field>
+                                        <field name="acc_number"/>
+                                    </tree>
+                                </group>
+                            </page>
+                            <!-- <page string="Invoicing" name="invoicing">
+                                <group modifiers="{}">
+                                    <group string="Bank Accounts" name="banks" modifiers="{}">
+                                        <field name="bank_ids" nolabel="1" modifiers="{}"/>
+                                        <button type="action" class="btn-link" name="59" context="{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'form_view_ref': 'account.view_company_partner_bank_form'}" string="View accounts detail" colspan="2" modifiers="{}" options="{}"/>
+                                    </group>
+                                    <group string="Accounting Entries" name="accounting_entries" invisible="1" modifiers="{'invisible':true}">
+                                        <field name="currency_id" invisible="1" can_create="true" can_write="true" modifiers="{'invisible':true,'readonly':true}"/>
+                                        <field name="property_account_receivable_id" can_create="true" can_write="true" modifiers="{'required':true}"/>
+                                        <field name="property_account_payable_id" can_create="true" can_write="true" modifiers="{'required':true}"/>
+                                    </group>
+                                </group>
+                            </page> -->
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="investor_tree_view" model="ir.ui.view">
+            <field name="name">rem.investor.tree.view</field>
+            <field name="model">rem.investor</field>
+            <field name="arch" type="xml">
+                <tree string="Investor" default_order="create_date desc">
+                    <field name="name"/>
+                    <field name="vendor"/>
+                    <field name="address"/>
+                    <field name="taxcode"/>
+                    <field name="phone"/>
+                    <field name="mobile"/>
+                    <field name="email"/> 
+                    <field name="website"/>                                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_investor" model="ir.actions.act_window">
+            <field name="name">Investor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rem.investor</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('investor_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('investor_form_view')})]"/>
+        </record>
+
+        <menuitem id="contractor_id" 
+                name="Contractors"
+                parent="main_real_estate" 
+                sequence="2"/>
+
+        <menuitem id="investor_menu" 
+                name="Investor"
+                sequence="1"
+                action="action_investor"
+                parent="contractor_id"/>
+
+        <menuitem id="agency_menu" 
+                name="Agency"
+                sequence="2"
+                action="action_agency"
+                parent="contractor_id"/>
+
+    </data>
+</odoo>
