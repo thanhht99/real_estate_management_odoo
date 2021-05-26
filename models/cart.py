@@ -23,6 +23,8 @@ class Cart(models.Model):
 
     project = fields.Many2one('rem.project', string="Project", required=True)
 
+    contact = fields.Many2many('res.partner', string="Contact", required=True)
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('open', 'Sale Open'),

@@ -46,7 +46,11 @@
                                         <field name="cart_id" invisible="1"/>
                                     </tree>
                                 </field>
-                            </page>						
+                            </page>
+                            <page name="contact" string="List of contacts" >
+                                <field name="contact">                                    
+                                </field>
+                            </page>
 						</notebook>
                     </sheet>
                 </form>
