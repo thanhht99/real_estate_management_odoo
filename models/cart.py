@@ -24,7 +24,7 @@ class Cart(models.Model):
     project = fields.Many2one('rem.project', string="Project", required=True)
 
     state = fields.Selection([
-        ('draft', 'Quotation'),
+        ('draft', 'Draft'),
         ('open', 'Sale Open'),
         ('soldout', 'Sold Out'),
         ('done', 'Locked'),
@@ -32,15 +32,8 @@ class Cart(models.Model):
         ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
     # products_list =  fields.Many2many('product.product', string="Product", required=True)
 
-
     cart_line = fields.One2many('rem.cart.line', 'cart_id', string="Cart Lines", copy=True, auto_join=True)
-
-    # @api.onchange('project')
-    # def onchange_project(self):
-    #     self.cart_line['domain'] = {'product_id': [('project_id', '=', self.project)]}
-    #     return self.cart_line
-
-
+    
     # def create(self,values)
     @api.multi
     def action_open(self):
@@ -55,6 +48,8 @@ class Cart(models.Model):
 
 class CartLine(models.Model):
     _name = 'rem.cart.line'
+
+    _logger = logging.getLogger(__name__)
 
     cart_id = fields.Many2one('rem.cart')
     project_code = fields.Char(string='Code Project')

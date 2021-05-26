@@ -70,6 +70,18 @@
             <field name="email">info@savills.com.vn</field>
             <field name="website">www.savills.com.vn</field>
         </record>
+        <record model="rem.percentage" id="percentage0">
+            <field name="name">2%</field>
+            <field name="percentage">0.02</field>
+        </record>
+        <record model="rem.percentage" id="percentage1">
+            <field name="name">3%</field>
+            <field name="percentage">0.03</field>
+        </record>
+        <record model="rem.percentage" id="percentage2">
+            <field name="name">5%</field>
+            <field name="percentage">0.05</field>
+        </record>
         
     </data>
 </odoo>

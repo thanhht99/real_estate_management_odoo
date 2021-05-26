@@ -75,7 +75,7 @@
 
         <menuitem id="menu_placeholder" 
                 name="Placeholder"
-                sequence="2"
+                sequence="4"
                 action="action_placeholder"
                 parent="main_real_estate"
                 groups="base.group_user"/>

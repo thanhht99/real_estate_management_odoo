@@ -9,3 +9,4 @@ from . import sale_order
 from . import agency
 from . import property_set
 from . import placeholder
+from . import contact
