@@ -24,7 +24,7 @@ class Placeholder(models.Model):
 
     price_holder = fields.Float(string='Cost to holder')
 
-    partner_id = fields.Many2one('res.partner', required=True)
+    partner_id = fields.Many2one('res.partner', string="Customer" ,required=True)
 
     payment_term = fields.Selection([
         ('nocost', 'No Cost'),
