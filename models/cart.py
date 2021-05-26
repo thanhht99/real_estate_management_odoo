@@ -23,7 +23,7 @@ class Cart(models.Model):
 
     project = fields.Many2one('rem.project', string="Project", required=True)
 
-    contact = fields.Many2many('res.partner', string="Contact", required=True)
+    open_sale_location = fields.Char(string="Open sale location", required=True)
 
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -39,9 +39,12 @@ class Cart(models.Model):
     # def create(self,values)
     @api.multi
     def action_open(self):
-        self.ensure_one()
+        self.ensure_one()        
+        products = self.cart_line.mapped('product_id')
+        if products.filtered(lambda p: p.sale_opening == 'opening'):
+            raise UserError("Products already in the first open other sell")
+        products.write({'sale_opening': 'opening'})
         self.state = 'open'
-        self.cart_line.mapped('product_id').write({'sale_opening': 'opening'})
 
     @api.multi
     def action_soldout(self):

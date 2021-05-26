@@ -10,7 +10,7 @@
                         <button name="action_open" string="Open" type="object" class="oe_highlight" groups="base.group_user"/>
                         <!-- <button name="action_invoice_sent" string="Send &amp; Print" type="object" attrs="{'invisible':['|',('sent','=',False), ('state', 'not in', ('open','in_payment','paid'))]}" groups="base.group_user"/>
                         <button name="161" id="account_invoice_payment_btn" type="action" attrs="{'invisible': [('state', '!=', 'open')]}" string="Register Payment" groups="base.group_user" class="oe_highlight"/> -->
-                        <button name="action_soldout" type="object" states="open" string="Validate" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
+                        <button name="action_soldout" type="object" states="open" string="Sold out" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
                         <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
                         <button name="preview_invoice" type="object" string="Preview"/> -->
                         <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
@@ -23,6 +23,9 @@
                             <label for="project"/>
                             <h3><field name="project"/></h3>
                         </div>
+                        <group>
+                            <field name="open_sale_location"/>
+                        </group>
                         <group name="images">
                             <group>
                                 <!-- <field name="company"/> -->
@@ -47,10 +50,16 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page name="contact" string="List of contacts" >
-                                <field name="contact">                                    
+                            <!-- <page name="contact" string="List of contacts" >
+                                <field name="contact" mode="tree">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                        <field name="pct"/>
+                                    </tree>
                                 </field>
-                            </page>
+                            </page> -->
 						</notebook>
                     </sheet>
                 </form>

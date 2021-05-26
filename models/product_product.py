@@ -16,6 +16,8 @@ class ProductTemplate(models.Model):
     area = fields.Float('Property Area (m2)', required=True)
 
     project_id = fields.Many2one('rem.project', string="Project", required=True)
+
+    contact_ids = fields.Many2many('res.partner', string="Contact", required=True)
    
     optional_product_ids = fields.Many2many(
         'product.template', 'product_optional_rel', 'src_id', 'dest_id',
