@@ -16,6 +16,12 @@
                         <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
                         <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,soldout"/>
                     </header>
+                    <button type="action" class="btn-link"
+                                    name="%(action_placeholder)d"
+                                    string="View list placeholder"
+                                    colspan="2"
+                               />
+
                     <sheet>
                         <div class="oe_button_box" name="button_box">
                             <button class="oe_stat_button" name="action_open_placeholder" icon="fa-th-list" type="object" attrs="{'invisible':[('project','=',False)]}">
@@ -98,6 +104,7 @@
                 (0, 0, {'view_mode': 'form', 'view_id': ref('cart_form_view')})]"/>
         </record>        
         
+
 
         <menuitem id="cart_menu" 
                 name="Cart"
