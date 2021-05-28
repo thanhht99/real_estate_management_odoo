@@ -35,6 +35,11 @@ class Cart(models.Model):
     # products_list =  fields.Many2many('product.product', string="Product", required=True)
 
     cart_line = fields.One2many('rem.cart.line', 'cart_id', string="Cart Lines", copy=True, auto_join=True)
+
+    placeholder_count = fields.Integer(
+        '# Placeholders', 
+        # compute='_compute_placeholder_count',
+        help="The number of placeholder")
     
     # def create(self,values)
     @api.multi
@@ -50,6 +55,30 @@ class Cart(models.Model):
     def action_soldout(self):
         self.ensure_one()
         self.state = 'soldout'
+
+    @api.multi
+    def action_open_placeholder(self):
+        return {
+            'name': _('Placeholders'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'rem.placeholder',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'domain': [('cart', '=', self.id)],
+            'context': {
+                'default_cart': self.id,
+            }
+        }
+
+    # def _compute_placeholder_count(self):
+    #     read_group_res = self.env['rem.placeholder'].read_group([('cart', 'child_of', self.ids)], ['cart'], ['cart'])
+    #     group_data = dict((data['cart'][0], data['cart_count']) for data in read_group_res)
+    #     for cart1 in self:
+    #         placeholder_count = 0
+    #         for sub_cart1_id in cart1.search([('id', 'child_of', cart1.id)]).ids:
+    #             placeholder_count += group_data.get(sub_cart1_id, 0)
+    #         cart1.placeholder_count = placeholder_count
 
 class CartLine(models.Model):
     _name = 'rem.cart.line'

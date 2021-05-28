@@ -17,6 +17,15 @@
                         <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,soldout"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_open_placeholder" icon="fa-th-list" type="object" attrs="{'invisible':[('project','=',False)]}">
+                                <div class="o_field_widget o_stat_info">
+                                <!-- class="oe_highlight" -->
+                                    <span class="o_stat_value"><field name="placeholder_count"/></span>
+                                    <span class="o_stat_text">Placeholders</span>
+                                </div>
+                            </button>
+                        </div>
                         <div class="oe_title">
                             <label for="name" string="Cart Name" class="oe_edit_only"/>
                             <h1><field name="name" placeholder="Dự án đợt 1"/></h1>
@@ -34,7 +43,7 @@
                             <group>
                                 <field name="end_date"/>
                             </group>                            
-                        </group>
+                        </group>                        
                         <notebook>
                             <page name="cart_lines" string="List of products" >
                                 <!-- <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]"/>                      	 -->
@@ -87,7 +96,8 @@
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('cart_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('cart_form_view')})]"/>
-        </record>
+        </record>        
+        
 
         <menuitem id="cart_menu" 
                 name="Cart"
