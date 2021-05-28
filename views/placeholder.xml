@@ -32,7 +32,7 @@
                             <field name="payment_term"/>
                         </group>
                         <group>
-                            <field name="payment_id"/>
+                            <field name="payment_id" attrs="{'invisible': [('payment_id', '=', `)]}"/>
                         </group>
                     </group>                     
                         <notebook>

@@ -16,6 +16,12 @@
                         <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
                         <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,soldout"/>
                     </header>
+                    <button type="action" class="btn-link"
+                                    name="%(action_placeholder)d"
+                                    string="View list placeholder"
+                                    colspan="2"
+                               />
+
                     <sheet>
                         <div class="oe_title">
                             <label for="name" string="Cart Name" class="oe_edit_only"/>
@@ -88,6 +94,7 @@
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('cart_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('cart_form_view')})]"/>
         </record>
+
 
         <menuitem id="cart_menu" 
                 name="Cart"
