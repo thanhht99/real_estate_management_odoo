@@ -89,6 +89,9 @@
                     <filter string="Type" name="filter_type" domain="[('type_isActive', '=', 'True')]"></filter>
                     <filter string="Opening" name="filter_opening" domain="[('sale_opening', '=', 'opening')]"></filter>
                     <filter string="NoOpening" name="filter_noopening" domain="[('sale_opening', '=', 'noopening')]"></filter>
+                    <group expand="0" string="Group By">
+                        <filter string="Sale Opening" name="sale_opening" domain="[]" context="{'group_by': 'sale_opening'}"/>
+                    </group>
                 </xpath>
                 <xpath expr="//search/filter[@name='inactive']" position="attributes">
                     <attribute name="invisible">1</attribute>

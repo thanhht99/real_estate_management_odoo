@@ -26,14 +26,7 @@ class Placeholder(models.Model):
 
     partner_id = fields.Many2one('res.partner', string="Customer" ,required=True)
 
-    payment_term = fields.Selection([
-        ('nocost', 'No Cost'),
-        ('oneweek', '1 Week'),
-        ('twoweek', '2 Week'),
-        ('onemonth', '1 Month'),
-        ('twomonth', '2 Month'),
-        ('sixmonth', '6 Month'),
-    ])
+    payment_term_id = fields.Many2one('account.payment.term', string="Payment term")
 
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -47,7 +40,7 @@ class Placeholder(models.Model):
         ('bank', 'Bank(VND)'),
         ('cash', 'Cash(VND)')
     ])
-    placeholder_date = fields.Date(string='Ngày đặt chổ')
+    placeholder_date = fields.Date(string='Placeholder date')
     # product = fields.Many2one('product.product', required=True)
     payment_id = fields.Many2one('account.payment', string='Payment Name')
 
@@ -75,7 +68,7 @@ class Placeholder(models.Model):
         self.ensure_one()
         self.state = 'done'
         self.placeholder_line.mapped('product_id').write(
-            {'sale_opening': 'deposited'})
+            {'sale_opening': 'done'})
 
 class PlaceholderLine(models.Model):
     _name = 'rem.placeholder.line'
