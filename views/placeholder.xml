@@ -29,7 +29,7 @@
                             <field name="price_holder"/>
                         </group>
                         <group>
-                            <field name="payment_term"/>
+                            <field name="payment_term" options="{'no_create': True}"/>
                         </group>
                     </group>                     
                         <notebook>

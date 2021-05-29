@@ -27,15 +27,16 @@ class Placeholder(models.Model):
 
     partner_id = fields.Many2one('res.partner', required=True)
 
-    payment_term = fields.Selection([
-        ('nocost', 'No Cost'),
-        ('oneweek', '1 Week'),
-        ('twoweek', '2 Week'),
-        ('onemonth', '1 Month'),
-        ('twomonth', '2 Month'),
-        ('sixmonth', '6 Month'),
-    ])
+    # payment_term = fields.Selection([
+    #     ('nocost', 'No Cost'),
+    #     ('oneweek', '1 Week'),
+    #     ('twoweek', '2 Week'),
+    #     ('onemonth', '1 Month'),
+    #     ('twomonth', '2 Month'),
+    #     ('sixmonth', '6 Month'),
+    # ])
 
+    payment_term = fields.Many2one('account.payment.term',string='Payment term')
     state = fields.Selection([
         ('draft', 'Quotation'),
         ('validate', 'Validate Placeholder'),
