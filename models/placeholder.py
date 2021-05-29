@@ -15,7 +15,6 @@ _logger = logging.getLogger(__name__)
 
 class Placeholder(models.Model):
     _name = 'rem.placeholder'
-    
 
     _description = "Placeholder Real Estate"
 
@@ -25,7 +24,7 @@ class Placeholder(models.Model):
 
     price_holder = fields.Float(string='Cost to holder')
 
-    partner_id = fields.Many2one('res.partner', required=True)
+    partner_id = fields.Many2one('res.partner', string="Customer" ,required=True)
 
     # payment_term = fields.Selection([
     #     ('nocost', 'No Cost'),
@@ -38,14 +37,20 @@ class Placeholder(models.Model):
 
     payment_term = fields.Many2one('account.payment.term',string='Payment term')
     state = fields.Selection([
-        ('draft', 'Quotation'),
-        ('validate', 'Validate Placeholder'),
-        ('paid', 'Paid'),
+        ('draft', 'Nháp'),
+        ('validate', 'Đã thanh toán'),
+        ('paid', 'Done'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
 
+    payment_type = fields.Selection([
+        ('bank', 'Bank(VND)'),
+        ('cash', 'Cash(VND)')
+    ])
+    placeholder_date = fields.Date(string='Ngày đặt chổ')
     # product = fields.Many2one('product.product', required=True)
+    payment_id = fields.Many2one('account.payment', string='Payment Name')
 
     placeholder_line = fields.One2many(
         'rem.placeholder.line', 'placeholder_id', string="Placeholder Lines", copy=True, auto_join=True)
@@ -55,8 +60,16 @@ class Placeholder(models.Model):
     def action_validate(self):
         self.ensure_one()
         self.state = 'validate'
-        # self.placeholder_line.mapped('product_id').write(
-        #     {'sale_opening': 'deposited'})
+        payment = self.env['account.payment'].create({
+            "name": self.cart.name + '/ ' + str(self.placeholder_line.product_id.name) + '/ ' + str(self.partner_id.name),
+            "payment_type": 'inbound',
+            "partner_id": self.partner_id.id,
+            "payment_method_id": 1,
+            "partner_type": 'customer',
+            "amount": self.price_holder,
+            "journal_id": 7,
+        })
+        self.payment_id = payment
 
     @api.multi
     def action_paid(self):
@@ -64,6 +77,10 @@ class Placeholder(models.Model):
         self.state = 'paid'
         self.placeholder_line.mapped('product_id').write(
             {'sale_opening': 'deposited'})
+
+    # @api.multi
+    # def action_validate_payment(self):
+    #     self.ensure_one()
 
 
 class PlaceholderLine(models.Model):
@@ -92,6 +109,7 @@ class PlaceholderLine(models.Model):
             lambda line: line.product_id)
         return {
             'domain': {
-                'product_id': [('id', 'in', products.ids)]
+                'product_id': [('id', 'in', products.ids),
+                               ('sale_opening', '=', 'opening')]
             }
         }

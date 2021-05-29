@@ -7,22 +7,40 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                    <button name="action_open" string="Open" type="object" class="oe_highlight" groups="base.group_user"/>
-                    <!-- <button name="action_invoice_sent" string="Send &amp; Print" type="object" attrs="{'invisible':['|',('sent','=',False), ('state', 'not in', ('open','in_payment','paid'))]}" groups="base.group_user"/>
-                    <button name="161" id="account_invoice_payment_btn" type="action" attrs="{'invisible': [('state', '!=', 'open')]}" string="Register Payment" groups="base.group_user" class="oe_highlight"/> -->
-                    <button name="action_soldout" type="object" states="open" string="Validate" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
-                    <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
-                    <button name="preview_invoice" type="object" string="Preview"/> -->
-                    <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
-                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,soldout"/>
+                        <button name="action_open" string="Open" type="object" class="oe_highlight" groups="base.group_user"/>
+                        <!-- <button name="action_invoice_sent" string="Send &amp; Print" type="object" attrs="{'invisible':['|',('sent','=',False), ('state', 'not in', ('open','in_payment','paid'))]}" groups="base.group_user"/>
+                        <button name="161" id="account_invoice_payment_btn" type="action" attrs="{'invisible': [('state', '!=', 'open')]}" string="Register Payment" groups="base.group_user" class="oe_highlight"/> -->
+                        <button name="action_soldout" type="object" states="open" string="Sold out" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
+                        <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
+                        <button name="preview_invoice" type="object" string="Preview"/> -->
+                        <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,soldout"/>
                     </header>
+                    <button type="action" class="btn-link"
+                                    name="%(action_placeholder)d"
+                                    string="View list placeholder"
+                                    colspan="2"
+                               />
+
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_open_placeholder" icon="fa-th-list" type="object" attrs="{'invisible':[('project','=',False)]}">
+                                <div class="o_field_widget o_stat_info">
+                                <!-- class="oe_highlight" -->
+                                    <span class="o_stat_value"><field name="placeholder_count"/></span>
+                                    <span class="o_stat_text">Placeholders</span>
+                                </div>
+                            </button>
+                        </div>
                         <div class="oe_title">
                             <label for="name" string="Cart Name" class="oe_edit_only"/>
                             <h1><field name="name" placeholder="Dự án đợt 1"/></h1>
                             <label for="project"/>
                             <h3><field name="project"/></h3>
                         </div>
+                        <group>
+                            <field name="open_sale_location"/>
+                        </group>
                         <group name="images">
                             <group>
                                 <!-- <field name="company"/> -->
@@ -31,7 +49,7 @@
                             <group>
                                 <field name="end_date"/>
                             </group>                            
-                        </group>
+                        </group>                        
                         <notebook>
                             <page name="cart_lines" string="List of products" >
                                 <!-- <field name="products_list" domain="[('property_ok','=',True),('project_id','=',project),('sale_opening','=','noopening')]"/>                      	 -->
@@ -39,14 +57,24 @@
                                     <tree editable="bottom">     
                                         <control>
                                             <create string="Add a product"/>
-                                        </control>       
+                                        </control>
+                                        <field name="project_code" invisible="1"/> 
                                         <field name="product_id" force_save="1" domain="[('project_id.code','=',project_code),('property_ok','=',True),('sale_opening','=','noopening')]"/>
                                         <field name="price"/>
-                                        <field name="project_code"/>
                                         <field name="cart_id" invisible="1"/>
                                     </tree>
                                 </field>
-                            </page>						
+                            </page>
+                            <!-- <page name="contact" string="List of contacts" >
+                                <field name="contact" mode="tree">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="phone"/>
+                                        <field name="pct"/>
+                                    </tree>
+                                </field>
+                            </page> -->
 						</notebook>
                     </sheet>
                 </form>
@@ -74,11 +102,13 @@
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('cart_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('cart_form_view')})]"/>
-        </record>
+        </record>        
+        
+
 
         <menuitem id="cart_menu" 
                 name="Cart"
-                sequence="4"
+                sequence="3"
                 action="action_cart"
                 parent="main_real_estate"/>
 

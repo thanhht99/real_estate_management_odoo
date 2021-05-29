@@ -71,6 +71,7 @@
                 <field name="lst_price"/>
                 <field name="product_variant_count"/>
                 <field name="currency_id"/>
+                <field name="sale_opening"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
@@ -90,6 +91,11 @@
                                 <div name="tags"/>
                                 <ul>
                                     <li>Price: <field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field></li>
+                                </ul>
+                                <ul>
+                                    <strong>
+                                        <field name="sale_opening"/>
+                                    </strong>
                                 </ul>
                                 <div name="tags"/>
                             </div>
@@ -132,12 +138,7 @@
         <field name="view_type">form</field>
         <field name="view_id" ref="product_template_kanban_view"/>
         <field name="search_view_id" ref="product.product_template_search_view"/>
-<<<<<<< Updated upstream
-        <field name="context">{"search_default_filter_to_property":1, "default_property_ok":True}</field>
-=======
-        <!-- <field name="context">{"search_default_filter_to_property":1, "default_property_ok":True, "default_sale_ok":True, "search_default_group_sale_opening":1}</field> -->
-        <field name="context">{"search_default_group_sale_opening":1}</field>
->>>>>>> Stashed changes
+        <field name="context">{"search_default_filter_to_property":1, "default_property_ok":True, "default_sale_ok":True}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new product

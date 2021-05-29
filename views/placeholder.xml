@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                    <button name="action_validate" string="Validate" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="action_validate" string="Thanh toán" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'not in', ('draft'))]}" groups="base.group_user"/>
                     <button name="action_paid" type="object" states="validate" string="Deposited" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
                     <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/> -->
                     <!-- <button name="preview_invoice" type="object" string="Preview"/> -->
@@ -31,6 +31,12 @@
                         <group>
                             <field name="payment_term" options="{'no_create': True}"/>
                         </group>
+                        <group>
+                            <field name="placeholder_date"/>
+                        </group>
+                        <group>
+                            <field name="payment_id" attrs="{'invisible': [('payment_id', '=', False)]}"/>
+                        </group>
                     </group>                     
                         <notebook>
                             <page name="placeholder_lines" string="List of products" >
@@ -39,7 +45,7 @@
                                         <control>
                                             <create string="Add a product"/>
                                         </control>       
-                                        <field name="product_id" force_save="1"/>
+                                        <field name="product_id" force_save="1" />
                                         <field name="price"/>
                                         <field name="placeholder_id" invisible="1"/>
                                     </tree>
@@ -72,10 +78,9 @@
                 (0, 0, {'view_mode': 'form', 'view_id': ref('placeholder_form_view')})]"/>
         </record>
 
-
         <menuitem id="menu_placeholder" 
                 name="Placeholder"
-                sequence="2"
+                sequence="4"
                 action="action_placeholder"
                 parent="main_real_estate"
                 groups="base.group_user"/>
