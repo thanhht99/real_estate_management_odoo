@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                    <button name="action_validate" string="Validate" type="object" class="oe_highlight" groups="base.group_user"/>
+                    <button name="action_validate" string="Thanh toán" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'not in', ('draft'))]}" groups="base.group_user"/>
                     <button name="action_paid" type="object" states="validate" string="Deposited" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
                     <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/> -->
                     <!-- <button name="preview_invoice" type="object" string="Preview"/> -->
@@ -32,7 +32,10 @@
                             <field name="payment_term"/>
                         </group>
                         <group>
-                            <field name="payment_id" attrs="{'invisible': [('payment_id', '=', `)]}"/>
+                            <field name="placeholder_date"/>
+                        </group>
+                        <group>
+                            <field name="payment_id" attrs="{'invisible': [('payment_id', '=', False)]}"/>
                         </group>
                     </group>                     
                         <notebook>

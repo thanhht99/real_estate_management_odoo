@@ -36,9 +36,9 @@ class Placeholder(models.Model):
     ])
 
     state = fields.Selection([
-        ('draft', 'Quotation'),
-        ('validate', 'Validate Placeholder'),
-        ('paid', 'Paid'),
+        ('draft', 'Nháp'),
+        ('validate', 'Đã thanh toán'),
+        ('paid', 'Done'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
@@ -47,7 +47,7 @@ class Placeholder(models.Model):
         ('bank', 'Bank(VND)'),
         ('cash', 'Cash(VND)')
     ])
-    payment_date = fields.Date(string='Date Payment')
+    placeholder_date = fields.Date(string='Ngày đặt chổ')
     # product = fields.Many2one('product.product', required=True)
     payment_id = fields.Many2one('account.payment', string='Payment Name')
 
