@@ -36,9 +36,9 @@ class Placeholder(models.Model):
     ])
 
     state = fields.Selection([
-        ('draft', 'Quotation'),
-        ('validate', 'Validate Placeholder'),
+        ('draft', 'Draft'),
         ('paid', 'Paid'),
+        ('validate', 'Validate'),        
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
@@ -47,7 +47,7 @@ class Placeholder(models.Model):
         ('bank', 'Bank(VND)'),
         ('cash', 'Cash(VND)')
     ])
-    payment_date = fields.Date(string='Date Payment')
+    placeholder_date = fields.Date(string='Ngày đặt chổ')
     # product = fields.Many2one('product.product', required=True)
     payment_id = fields.Many2one('account.payment', string='Payment Name')
 
@@ -56,9 +56,9 @@ class Placeholder(models.Model):
     # products_list = fields.Selection('products', string="List of products", required=True)
 
     @api.multi
-    def action_validate(self):
+    def action_pay(self):
         self.ensure_one()
-        self.state = 'validate'
+        self.state = 'paid'
         payment = self.env['account.payment'].create({
             "name": self.cart.name + '/ ' + str(self.placeholder_line.product_id.name) + '/ ' + str(self.partner_id.name),
             "payment_type": 'inbound',
@@ -71,16 +71,11 @@ class Placeholder(models.Model):
         self.payment_id = payment
 
     @api.multi
-    def action_paid(self):
+    def action_validate(self):
         self.ensure_one()
-        self.state = 'paid'
+        self.state = 'done'
         self.placeholder_line.mapped('product_id').write(
             {'sale_opening': 'deposited'})
-
-    # @api.multi
-    # def action_validate_payment(self):
-    #     self.ensure_one()
-
 
 class PlaceholderLine(models.Model):
     _name = 'rem.placeholder.line'
