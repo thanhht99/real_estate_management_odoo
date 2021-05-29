@@ -91,6 +91,7 @@
                     <filter string="NoOpening" name="filter_noopening" domain="[('sale_opening', '=', 'noopening')]"></filter>
                     <group expand="0" string="Group By">
                         <filter string="Sale Opening" name="sale_opening" domain="[]" context="{'group_by': 'sale_opening'}"/>
+                        <filter string="Project" name="project" domain="[]" context="{'group_by': 'project_id'}"/>
                     </group>
                 </xpath>
                 <xpath expr="//search/filter[@name='inactive']" position="attributes">
