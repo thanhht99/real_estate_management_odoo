@@ -38,7 +38,7 @@ class Cart(models.Model):
 
     placeholder_count = fields.Integer(
         '# Placeholders', 
-        # compute='_compute_placeholder_count',
+        compute='_compute_placeholder_count',
         help="The number of placeholder")
     
     # def create(self,values)
@@ -49,12 +49,12 @@ class Cart(models.Model):
         if products.filtered(lambda p: p.sale_opening == 'opening'):
             raise UserError("Products already in the first open other sell")
         products.write({'sale_opening': 'opening'})
-        self.state = 'open'
+        self.state = 'soldout'
 
     @api.multi
     def action_soldout(self):
         self.ensure_one()
-        self.state = 'soldout'
+        self.state = 'done'
 
     @api.multi
     def action_open_placeholder(self):
@@ -70,6 +70,11 @@ class Cart(models.Model):
                 'default_cart': self.id,
             }
         }
+        
+    def _compute_placeholder_count(self):
+        data_obj = self.env['rem.placeholder'].search([('cart', '=', self.id)])
+        _logger.exception('--------------------------------------------------------  %s', data_obj)
+        self.placeholder_count = len(data_obj)
 
     # def _compute_placeholder_count(self):
     #     read_group_res = self.env['rem.placeholder'].read_group([('cart', 'child_of', self.ids)], ['cart'], ['cart'])
