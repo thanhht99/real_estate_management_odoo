@@ -74,7 +74,7 @@
                 <search string="Placeholder">
                     <group expand="0" string="Group By">
                         <filter string="Cart" name="cart" domain="[]" context="{'group_by': 'cart'}"/>
-                        <filter string="Project" name="project" domain="[]" context="{'group_by': 'cart.project'}"/>
+                        <filter string="Project" name="project" domain="[]" context="{'group_by': 'project_id'}"/>
                     </group>
                 </search>                
             </field>

@@ -27,6 +27,7 @@ class Placeholder(models.Model):
     partner_id = fields.Many2one('res.partner', string="Customer" ,required=True)
 
     payment_term_id = fields.Many2one('account.payment.term', string="Payment term")
+    project_id = fields.Many2one('rem.project', string="Project", required=True)
 
     state = fields.Selection([
         ('draft', 'Draft'),
