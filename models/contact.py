@@ -19,3 +19,8 @@ class PercentageOfContact(models.Model):
     _inherit = 'res.partner'    
 
     pct = fields.Many2one('rem.percentage',string='Percentage Name')
+
+    property_count = fields.Integer(
+        '# Properties', 
+        # compute='_compute_property_count',
+        help="The number of Properties")
