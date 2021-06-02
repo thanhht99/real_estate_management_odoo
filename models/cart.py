@@ -49,7 +49,7 @@ class Cart(models.Model):
         if products.filtered(lambda p: p.sale_opening == 'opening'):
             raise UserError("Products already in the first open other sell")
         products.write({'sale_opening': 'opening'})
-        self.state = 'soldout'
+        self.state = 'open'
 
     @api.multi
     def action_soldout(self):

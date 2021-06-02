@@ -82,6 +82,46 @@
             <field name="name">5%</field>
             <field name="percentage">0.05</field>
         </record>
+        <record model="product.product" id="product0">
+            <field name="name">CH4B</field>
+            <field name="list_price">987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH4B_1</field>
+        </record>
+        <record model="product.product" id="product1">
+            <field name="name">CH5B</field>
+            <field name="list_price">987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH5B_1</field>
+        </record>
+        <record model="product.product" id="product2">
+            <field name="name">CH1B</field>
+            <field name="list_price">987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH1B_1</field>
+        </record>
+        <record model="product.product" id="product3">
+            <field name="name">CH11B</field>
+            <field name="list_price">987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH11B_1</field>
+        </record>
+        <record model="product.product" id="product4">
+            <field name="name">CH1A</field>
+            <field name="list_price">987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH1A_1</field>
+        </record>
         
     </data>
 </odoo>

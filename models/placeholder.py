@@ -43,6 +43,7 @@ class Placeholder(models.Model):
     placeholder_date = fields.Date(string='Placeholder date')
     # product = fields.Many2one('product.product', required=True)
     payment_id = fields.Many2one('account.payment', string='Payment Name')
+    reservation_deadline = fields.Date(string='Reservation Deadline')
 
     placeholder_line = fields.One2many(
         'rem.placeholder.line', 'placeholder_id', string="Placeholder Lines", copy=True, auto_join=True)
@@ -62,6 +63,7 @@ class Placeholder(models.Model):
             "journal_id": 7,
         })
         self.payment_id = payment
+        self.reservation_deadline = fields.Date.context_today
 
     @api.multi
     def action_validate(self):

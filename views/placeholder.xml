@@ -36,6 +36,9 @@
                         <group>
                             <field name="payment_id" attrs="{'invisible': [('payment_id', '=', False)]}"/>
                         </group>
+                        <group>
+                            <field name="reservation_deadline" attrs="{'invisible': [('payment_id', '=', False)]}"/>
+                        </group>
                     </group>                     
                         <notebook>
                             <page name="placeholder_lines" string="List of products" >
