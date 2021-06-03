@@ -122,6 +122,47 @@
             <field name="project_id">1</field>
             <field name="default_code">CH1A_1</field>
         </record>
+        <record model="product.product" id="product5">
+            <field name="name">CH1T</field>
+            <field name="list_price">2987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH1T_1</field>
+        </record>
+        <record model="product.product" id="product6">
+            <field name="name">CH6T</field>
+            <field name="list_price">2987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH6T_1</field>
+        </record>
+        <record model="product.product" id="product7">
+            <field name="name">CH7T</field>
+            <field name="list_price">2987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH7T_1</field>
+        </record>
+        <record model="product.product" id="product8">
+            <field name="name">CH8T</field>
+            <field name="list_price">2987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH8T_1</field>
+        </record>
+        <record model="product.product" id="product9">
+            <field name="name">CH9T</field>
+            <field name="list_price">2987000000</field>
+            <field name="property_ok">True</field>
+            <field name="sale_ok">True</field>
+            <field name="project_id">1</field>
+            <field name="default_code">CH9T_1</field>
+        </record>
+        
         
     </data>
 </odoo>

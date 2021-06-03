@@ -7,11 +7,10 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                    <button name="action_pay" string="Pay" status="draft" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', ('draft'))]}" groups="base.group_user"/>
-                    <button name="action_validate" type="object" states="paid" attrs="{'invisible': [('state', '!=', ('paid'))]}" string="Validate" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
-                    <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/> -->
-                    <!-- <button name="preview_invoice" type="object" string="Preview"/> -->
-                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,paid,validate"/>
+                        <button name="action_pay" string="Pay" states="draft" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight" groups="base.group_user"/>
+                        <button name="action_pay_the_rest" string="Pay The Rest" states="validate" type="object" attrs="{'invisible': [('state', '!=', 'validate')]}" class="oe_highlight" groups="base.group_user"/>
+                        <button name="action_validate" string="Validate and Contract" type="object" states="paid" attrs="{'invisible': [('state', '!=', ('paid'))]}" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,paid,validate,pay_the_rest"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -39,6 +38,12 @@
                         <group>
                             <field name="reservation_deadline" attrs="{'invisible': [('payment_id', '=', False)]}"/>
                         </group>
+                        <group>
+                            <field name="seller_id" attrs="{'invisible': [('state', '!=', 'validate')]}"/>
+                        </group>
+                        <group>
+                            <field name="remaining_amount" attrs="{'invisible': [('state', '!=', 'validate')]}"/>
+                        </group>
                     </group>                     
                         <notebook>
                             <page name="placeholder_lines" string="List of products" >
@@ -65,7 +70,13 @@
             <field name="arch" type="xml">
                 <tree string="Placeholder" default_order="create_date desc">
                     <field name="name"/>
-                    <field name="cart"/>                                  
+                    <field name="cart"/>                                
+                    <field name="state"/>                                
+                    <field name="placeholder_line">
+                        <tree editable="bottom">  
+                            <field name="product_id" force_save="1" />
+                        </tree>
+                    </field>                             
                 </tree>
             </field>
         </record>
@@ -77,6 +88,7 @@
                 <search string="Placeholder">
                     <group expand="0" string="Group By">
                         <filter string="Cart" name="cart" domain="[]" context="{'group_by': 'cart'}"/>
+                        <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}"/>
                     </group>
                 </search>                
             </field>
@@ -86,7 +98,7 @@
             <field name="name">Placeholder</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">rem.placeholder</field>
-            <field name="context">{"search_default_cart":True}</field>
+            <field name="context">{"search_default_cart":True, "search_default_state":True}</field>
 
             <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
             <field name="view_ids" eval="[(5, 0, 0),
