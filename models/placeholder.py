@@ -54,7 +54,7 @@ class Placeholder(models.Model):
 
     @api.multi
     def action_pay(self):
-        self.ensure_one()
+        self.ensure_one()        
         self.state = 'paid'
         self.reservation_deadline = self.placeholder_date + timedelta(days=7)
         payment = self.env['account.payment'].create({
@@ -67,20 +67,23 @@ class Placeholder(models.Model):
             "journal_id": 7,
         })
         self.payment_id = payment
+        self.remaining_amount = self.placeholder_line[0].price - self.price_holder
         
 
     @api.multi
     def action_validate(self):
         self.ensure_one()
-        self.state = 'validate'
+        products = self.placeholder_line.mapped('product_id')
+        if products.filtered(lambda p: p.sale_opening == 'sold'):
+            raise UserError("Products sold")
         self.placeholder_line.mapped('product_id').write(
-            {'sale_opening': 'done'})
+            {'sale_opening': 'sold'})
+        self.state = 'validate'        
 
     @api.multi
     def action_pay_the_rest(self):
         self.ensure_one()
-        self.state = 'done'
-        self.remaining_amount = self.placeholder_line[0].price
+        self.state = 'done'        
 
 class PlaceholderLine(models.Model):
     _name = 'rem.placeholder.line'

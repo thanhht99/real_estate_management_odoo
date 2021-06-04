@@ -39,10 +39,10 @@
                             <field name="reservation_deadline" attrs="{'invisible': [('payment_id', '=', False)]}"/>
                         </group>
                         <group>
-                            <field name="seller_id" attrs="{'invisible': [('state', '!=', 'validate')]}"/>
+                            <field name="seller_id" attrs="{'invisible': [('payment_id', '=', False)]}"/>
                         </group>
                         <group>
-                            <field name="remaining_amount" attrs="{'invisible': [('state', '!=', 'validate')]}"/>
+                            <field name="remaining_amount" attrs="{'invisible': [('payment_id', '=', False)]}"/>
                         </group>
                     </group>                     
                         <notebook>
@@ -71,12 +71,7 @@
                 <tree string="Placeholder" default_order="create_date desc">
                     <field name="name"/>
                     <field name="cart"/>                                
-                    <field name="state"/>                                
-                    <field name="placeholder_line">
-                        <tree editable="bottom">  
-                            <field name="product_id" force_save="1" />
-                        </tree>
-                    </field>                             
+                    <field name="state"/>                
                 </tree>
             </field>
         </record>
