@@ -63,6 +63,7 @@
     <record id="product_template_kanban_view" model="ir.ui.view">
         <field name="name">Product.template.product.kanban</field>
         <field name="model">product.template</field>
+        <field name="context">{"search_default_group_sale_opening":1}</field>
         <field name="arch" type="xml">
             <kanban>
                 <field name="id"/>
@@ -70,6 +71,7 @@
                 <field name="lst_price"/>
                 <field name="product_variant_count"/>
                 <field name="currency_id"/>
+                <field name="sale_opening"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
@@ -90,6 +92,11 @@
                                 <ul>
                                     <li>Price: <field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field></li>
                                 </ul>
+                                <ul>
+                                    <strong>
+                                        <field name="sale_opening"/>
+                                    </strong>
+                                </ul>
                                 <div name="tags"/>
                             </div>
                         </div>
@@ -99,6 +106,30 @@
         </field>
     </record>
 
+
+    <record id="product_template_search_view" model="ir.ui.view">
+        <field name="name">product.template.search</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Product">
+                <field name="name" string="Product" filter_domain="['|', '|', '|', ('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self)]"/>
+                <field name="categ_id" filter_domain="[('categ_id', 'child_of', raw_value)]"/>
+                <separator/>
+                <filter string="Services" name="services" domain="[('type','=','service')]"/>
+                <filter string="Products" name="consumable" domain="[('type', 'in', ['consu', 'product'])]"/>
+                <separator/>
+                <filter string="Can be Sold" name="filter_to_sell" domain="[('sale_ok','=',True)]"/>
+                <filter string="Can be Purchased" name="filter_to_purchase" domain="[('purchase_ok', '=', True)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <field string="Attributes" name="attribute_line_ids" groups="product.group_product_variant"/>
+                <field name="pricelist_id" widget="selection" context="{'pricelist': self}" filter_domain="[]" groups="product.group_sale_pricelist"/> <!-- Keep widget=selection on this field to pass numeric `self` value, which is not the case for regular m2o widgets! -->
+                <separator/>
+            </search>
+        </field>
+    </record>
+
+
     <record id="product_template_action" model="ir.actions.act_window">
         <field name="name">Products</field>
         <field name="type">ir.actions.act_window</field>
@@ -107,7 +138,7 @@
         <field name="view_type">form</field>
         <field name="view_id" ref="product_template_kanban_view"/>
         <field name="search_view_id" ref="product.product_template_search_view"/>
-        <field name="context">{"search_default_filter_to_property":1, "default_property_ok":True}</field>
+        <field name="context">{"search_default_filter_to_property":1, "default_property_ok":True, "default_sale_ok":True}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new product

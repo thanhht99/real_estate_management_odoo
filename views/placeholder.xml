@@ -6,6 +6,14 @@
             <field name="model">rem.placeholder</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                    <button name="action_validate" string="Thanh toán" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'not in', ('draft'))]}" groups="base.group_user"/>
+                    <button name="action_paid" type="object" states="validate" string="Deposited" class="oe_highlight o_invoice_validate" groups="base.group_user"/>
+                    <!-- <button name="215" type="action" string="Add Credit Note" groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/> -->
+                    <!-- <button name="preview_invoice" type="object" string="Preview"/> -->
+                    <button name="action_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
+                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,validate,paid"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <label for="name" string="Placeholder Name" class="oe_edit_only"/>
@@ -20,6 +28,15 @@
                         <group>
                             <field name="price_holder"/>
                         </group>
+                        <group>
+                            <field name="payment_term" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="placeholder_date"/>
+                        </group>
+                        <group>
+                            <field name="payment_id" attrs="{'invisible': [('payment_id', '=', False)]}"/>
+                        </group>
                     </group>                     
                         <notebook>
                             <page name="placeholder_lines" string="List of products" >
@@ -28,7 +45,7 @@
                                         <control>
                                             <create string="Add a product"/>
                                         </control>       
-                                        <field name="product_id" force_save="1"/>
+                                        <field name="product_id" force_save="1" />
                                         <field name="price"/>
                                         <field name="placeholder_id" invisible="1"/>
                                     </tree>
@@ -60,7 +77,6 @@
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('placeholder_tree_view')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('placeholder_form_view')})]"/>
         </record>
-
 
         <menuitem id="menu_placeholder" 
                 name="Placeholder"
